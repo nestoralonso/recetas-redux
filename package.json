@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:dev": "browserify src/main.js -t babelify --debug --outfile dist/bundle.js",
+    "build:dev": "browserify src/main.js --extension=.jsx -t [ babelify --sourceMapsAbsolute ] --outfile dist/bundle.js",
     "start": "npm run build:dev && npm-run-all --parallel watch",
     "test": "npm run build:dev",
     "watch": "onchange src -- npm run build:dev",

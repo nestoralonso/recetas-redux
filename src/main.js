@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 
 import AppShell from './components/AppShell';
-import RecipeList from './containers/RecipeList';
-import About from './components/About';
+import RecipeList from './containers/RecipeList.jsx';
+import About from './components/About.jsx';
 import configureStore from './store/configureStore';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
