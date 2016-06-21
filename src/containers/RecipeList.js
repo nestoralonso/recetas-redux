@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { List, ListItem } from 'material-ui/List';
 
 import Recipe from '../components/Recipe';
+import { getAllRecipes } from '../reducers/recipes';
 
 class RecipeList extends Component {
   render() {
@@ -20,7 +21,7 @@ class RecipeList extends Component {
 }
 
 let mapStateToProps = (state) => ({
-  recipes: state.recipes
+  recipes: getAllRecipes(state.recipes)
 });
 
 RecipeList = connect(mapStateToProps)(RecipeList);
