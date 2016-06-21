@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+
+import { List, ListItem } from 'material-ui/List';
+
 import Recipe from '../components/Recipe';
 
 class RecipeList extends Component {
   render() {
     const { recipes } = this.props;
 
-    if(!recipes) return <div> Sorry </div>;
+    if(!recipes) return <div> Sorry, there are no recipes here</div>;
     return (
-      <div>
-        <ul>
-          {recipes.map(recipe => <li key={recipe.id}>
-            <Recipe recipe={recipe} />
-          </li>)}
-        </ul>
-      </div>
-    );
+      <List>
+        {recipes.map(recipe => <ListItem key={recipe.id}>
+          <Recipe recipe={recipe} />
+        </ListItem>)}
+      </List>)
   }
 }
 

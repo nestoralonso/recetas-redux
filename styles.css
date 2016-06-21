@@ -1,43 +1,33 @@
-.movie-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+html {
+  font-family: 'Roboto', sans-serif;
 }
 
-.movie-form {
-    max-width: 45rem;
-}
-.movie {
-    display: block;
-    border: 1px dashed #ccc;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    padding: 1em;
-}
-.movie--title {
-    display: block;
-    font-size: 1.5em;
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-.movie--year {
-    display: block;
-    font-size: 1.3em;
-    color: #333;
+
+.recipe-item {
+
 }
 
-.movie--duration {
-    display: block;
-    float: right;
-    color: #ccc;
+.recipe-item__thumbnail {
+  display: inline-block;
 }
 
-.btn-movie-new {
-    margin-top: 2em;
+.recipe-item__block {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 1em;
 }
 
-.movie-edit-panel {
-    background-color: #fafafa;
-    padding: 1em;
-    width: 100%;
-    height: 35em;
+.recipe-item__title {
+  font-weight: 500;
+  margin-top: 1em;
+  font-size: 1.2em;
+}
+
+.recipe-item__description {
+  margin-top: 1em;
 }
