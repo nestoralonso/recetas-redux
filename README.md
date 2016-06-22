@@ -33,6 +33,6 @@ Some of the tech used and the motivation to use it are listed here:
 
 ## TODOS
 - [x] Put some material-ui goodness
-- [] Add redux-thunk to deal with the asynchronous data 
-- [] Add some responsive styling
-- [] Update the data model to deal with the ingredients
+- [ ] Add redux-thunk to deal with the asynchronous data 
+- [ ] Add some responsive styling
+- [ ] Update the data model to deal with the ingredients
