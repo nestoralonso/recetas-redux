@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper';
 import MyAppBar from './MyAppBar.jsx';
 import Toolbar from './Toolbar.jsx';
 import RecipeForm from './RecipeForm.jsx';
+import RecipeList from '../containers/RecipeList';
 
 
 class AppShell extends Component {
@@ -18,7 +19,7 @@ class AppShell extends Component {
         <Paper>
           <MyAppBar />
           <Toolbar />
-          {children}
+          <RecipeList />
 
           <RecipeForm />
         </Paper>

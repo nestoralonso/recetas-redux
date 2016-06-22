@@ -7,6 +7,7 @@
     "start": "npm run build:dev && npm-run-all --parallel watch",
     "test": "npm run build:dev",
     "watch": "onchange src -- npm run build:dev",
+    "lint": "eslint src",
     "browser": "live-server --entry-file='index.html' --watch=dist/ --wait=500"
   },
   "keywords": [],
@@ -21,13 +22,17 @@
     "browserify": "^13.0.1",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.9.2",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
     "live-server": "^1.0.0",
     "npm-run-all": "^2.1.1",
     "onchange": "^2.4.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.9.1",
     "material-ui": "^0.15.1",
+    "node-uuid": "^1.4.7",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
