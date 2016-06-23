@@ -6,7 +6,10 @@ export const receiveRecipes = (response) => ({
   response,
 });
 
-
+/**
+ * fetchRecipes is a thunk: is a function that returns a function that accepts
+ * dispatch and getState as params and asynchronously dispatch other actions
+ */
 export const fetchRecipes = (userId) => (dispatch, getState) => {
   if (getState().recipes.isFetching) {
     return Promise.resolve();
@@ -33,11 +36,14 @@ export const fetchRecipes = (userId) => (dispatch, getState) => {
   });
 }
 
-export const addRecipe = (recipe) => {
-  return {
-    type: 'ADD_RECIPE',
-    id: v4(),
-    recipe
-  };
+/**
+ * This one is a thunk too
+ */
+export const addRecipe = (recipe) => (dispatch) => {
+  api.addRecipe(recipe).then(response => dispatch({
+    type: 'ADD_RECIPE_SUCCESS',
+    id: response.id,
+    response
+  }));
 };
 

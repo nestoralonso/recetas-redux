@@ -2,18 +2,16 @@ import { combineReducers } from 'redux';
 
 function byId(state={}, action) {
   switch (action.type) {
-    case 'ADD_RECIPE':
+    case 'ADD_RECIPE_SUCCESS':
       return Object.assign(
         {},
         state,
-        {[action.id]: recipe(state[action.id], action)})
+        {[action.id]: action.response});
     case 'FETCH_RECIPES_SUCCESS':
       const nextState = Object.assign({}, state);
       action.response.forEach(recipe => {
         nextState[recipe.id] = recipe;
       });
-
-
       return nextState;
   }
 
@@ -22,7 +20,7 @@ function byId(state={}, action) {
 
 function allIds(state=[], action) {
   switch (action.type) {
-    case 'ADD_RECIPE':
+    case 'ADD_RECIPE_SUCCESS':
       return [...state, action.id];
     case 'FETCH_RECIPES_SUCCESS':
       console.log('FETCH_RECIPES_SUCCESS', action.response);
@@ -32,27 +30,9 @@ function allIds(state=[], action) {
   return state;
 }
 
-function recipe(state={}, action) {
-  switch(action.type) {
-    case 'ADD_RECIPE':
-      return {
-        id: action.id,
-        title: action.recipe.title,
-        description: action.recipe.description,
-        portions: action.recipe.portions,
-        preparationTime: action.recipe.preparationTime,
-        cookingTime: action.recipe.cookingTime,
-        procedure: action.recipe.procedure
-      }
-  }
-
-  return state;
-};
-
 export function getAllRecipes(state) {
   return state.allIds.map(id => state.byId[id]);
 }
-
 
 const isFetching = (state = false, action) => {
   switch (action.type) {
@@ -65,7 +45,6 @@ const isFetching = (state = false, action) => {
       return state;
   }
 };
-
 
 const errorMessage = (state = null, action) => {
   switch (action.type) {

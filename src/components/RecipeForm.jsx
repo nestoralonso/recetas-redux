@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -140,5 +140,9 @@ class RecipeForm extends Component {
     this.updateStateFromInput(e, 'procedure');
   }
 }
+
+RecipeForm.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
 
 export default connect()(RecipeForm);

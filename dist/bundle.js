@@ -74347,6 +74347,10 @@ var receiveRecipes = exports.receiveRecipes = function receiveRecipes(response) 
   };
 };
 
+/**
+ * fetchRecipes is a thunk: is a function that returns a function that accepts
+ * dispatch and getState as params and asynchronously dispatch other actions
+ */
 var fetchRecipes = exports.fetchRecipes = function fetchRecipes(userId) {
   return function (dispatch, getState) {
     if (getState().recipes.isFetching) {
@@ -74374,11 +74378,18 @@ var fetchRecipes = exports.fetchRecipes = function fetchRecipes(userId) {
   };
 };
 
+/**
+ * This one is a thunk too
+ */
 var addRecipe = exports.addRecipe = function addRecipe(recipe) {
-  return {
-    type: 'ADD_RECIPE',
-    id: (0, _nodeUuid.v4)(),
-    recipe: recipe
+  return function (dispatch) {
+    api.addRecipe(recipe).then(function (response) {
+      return dispatch({
+        type: 'ADD_RECIPE_SUCCESS',
+        id: response.id,
+        response: response
+      });
+    });
   };
 };
 
@@ -74844,6 +74855,10 @@ var RecipeForm = function (_Component) {
   return RecipeForm;
 }(_react.Component);
 
+RecipeForm.propTypes = {
+  dispatch: _react.PropTypes.func.isRequired
+};
+
 exports.default = (0, _reactRedux.connect)()(RecipeForm);
 
 },{"../actions":949,"material-ui/DatePicker":611,"material-ui/Dialog":613,"material-ui/FlatButton":616,"material-ui/RaisedButton":632,"material-ui/TextField":642,"react":900,"react-redux":712}],955:[function(require,module,exports){
@@ -74986,6 +75001,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.fetchRecipes = fetchRecipes;
+exports.addRecipe = addRecipe;
 
 var _nodeUuid = require('node-uuid');
 
@@ -75022,6 +75038,17 @@ var delay = function delay(ms) {
 function fetchRecipes(userId) {
   return delay(300).then(function () {
     return fakeDb.recipes;
+  });
+}
+
+function addRecipe(recipe) {
+  return delay(300).then(function () {
+    var newRecipe = Object.assign({}, recipe, {
+      id: (0, _nodeUuid.v4)()
+    });
+
+    fakeDb.recipes.push(newRecipe);
+    return newRecipe;
   });
 }
 
@@ -75139,16 +75166,15 @@ function byId() {
 
   var _ret = function () {
     switch (action.type) {
-      case 'ADD_RECIPE':
+      case 'ADD_RECIPE_SUCCESS':
         return {
-          v: Object.assign({}, state, _defineProperty({}, action.id, recipe(state[action.id], action)))
+          v: Object.assign({}, state, _defineProperty({}, action.id, action.response))
         };
       case 'FETCH_RECIPES_SUCCESS':
         var nextState = Object.assign({}, state);
         action.response.forEach(function (recipe) {
           nextState[recipe.id] = recipe;
         });
-
         return {
           v: nextState
         };
@@ -75164,7 +75190,7 @@ function allIds() {
   var action = arguments[1];
 
   switch (action.type) {
-    case 'ADD_RECIPE':
+    case 'ADD_RECIPE_SUCCESS':
       return [].concat(_toConsumableArray(state), [action.id]);
     case 'FETCH_RECIPES_SUCCESS':
       console.log('FETCH_RECIPES_SUCCESS', action.response);
@@ -75175,26 +75201,6 @@ function allIds() {
 
   return state;
 }
-
-function recipe() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-  var action = arguments[1];
-
-  switch (action.type) {
-    case 'ADD_RECIPE':
-      return {
-        id: action.id,
-        title: action.recipe.title,
-        description: action.recipe.description,
-        portions: action.recipe.portions,
-        preparationTime: action.recipe.preparationTime,
-        cookingTime: action.recipe.cookingTime,
-        procedure: action.recipe.procedure
-      };
-  }
-
-  return state;
-};
 
 function getAllRecipes(state) {
   return state.allIds.map(function (id) {

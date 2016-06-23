@@ -39,3 +39,14 @@ export function fetchRecipes(userId) {
     return fakeDb.recipes;
   });
 }
+
+export function addRecipe(recipe) {
+  return delay(300).then(() => {
+    const newRecipe = Object.assign({}, recipe, {
+      id: v4()
+    });
+
+    fakeDb.recipes.push(newRecipe);
+    return newRecipe;
+  });
+}
