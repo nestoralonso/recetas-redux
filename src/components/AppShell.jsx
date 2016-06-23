@@ -19,7 +19,7 @@ class AppShell extends Component {
         <Paper>
           <MyAppBar />
           <Toolbar />
-          <RecipeList />
+          {children}
 
           <RecipeForm />
         </Paper>

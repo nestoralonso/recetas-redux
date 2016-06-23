@@ -5,8 +5,7 @@ import { List, ListItem } from 'material-ui/List';
 
 import Recipe from '../components/Recipe.jsx';
 import { getAllRecipes } from '../reducers/recipes';
-import { fetchRecipes } from '../fake-api';
-import { receiveRecipes } from '../actions';
+import * as actions from '../actions';
 
 
 class RecipeList extends Component {
@@ -18,12 +17,9 @@ class RecipeList extends Component {
   }
 
   fetchData() {
-    const { receiveRecipes } = this.props;
-    fetchRecipes().then(recipes =>
-      receiveRecipes(recipes)
-    );
+    const { fetchRecipes, userId } = this.props;
+    fetchRecipes();
   }
-
 
   render() {
     const { recipes } = this.props;
@@ -32,16 +28,19 @@ class RecipeList extends Component {
         {recipes.map(recipe => <ListItem key={recipe.id}>
           <Recipe recipe={recipe} />
         </ListItem>)}
-      </List>)
+      </List>);
   }
 }
 RecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
-}
+};
 
-let mapStateToProps = (state) => ({
-  recipes: getAllRecipes(state.recipes)
+const mapStateToProps = (state) => ({
+  recipes: getAllRecipes(state.recipes),
+  isFetching: state.recipes.isFetching,
+  error: state.recipes.errorMessage,
+  userId: state.userId,
 });
 
-RecipeList = connect(mapStateToProps, { receiveRecipes })(RecipeList);
+RecipeList = connect(mapStateToProps, { fetchRecipes: actions.fetchRecipes })(RecipeList);
 export default RecipeList;
