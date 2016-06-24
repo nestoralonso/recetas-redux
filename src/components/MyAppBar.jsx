@@ -14,16 +14,9 @@ const styles = {
     color: 'white'
   }
 };
-const MyAppBar = () => {
-  const appBarButtons = <span style={styles.buttons}>
-    <FlatButton label="Recipes" containerElement={<Link to="/recipes" />} />
-    <FlatButton label="About"  containerElement={<Link to="/about" />} />
-  </span>;
-
-  return (
-    <AppBar
-      title={<span style={styles.title}>Recetas Redux</span>} />
-  );
-};
+const MyAppBar = () => (
+  <AppBar
+    title={<span style={styles.title}>Recetas Redux</span>} />
+);
 
 export default MyAppBar;

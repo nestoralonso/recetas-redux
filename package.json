@@ -4,11 +4,11 @@
   "main": "index.js",
   "scripts": {
     "build:dev": "browserify src/main.js --extension=.jsx -t [ babelify --sourceMapsAbsolute ] --outfile dist/bundle.js",
-    "start": "npm run build:dev && npm-run-all --parallel watch",
-    "test": "npm run build:dev",
+    "start": "npm run build:dev && npm-run-all --parallel watch browser",
     "watch": "onchange src -- npm run build:dev",
-    "lint": "eslint src",
-    "browser": "live-server --entry-file='index.html' --watch=dist/ --wait=500"
+    "lint-fix": "eslint --fix src/",
+    "browser": "live-server --entry-file='index.html' --watch=dist/ --wait=100  --no-browser",
+    "browser80": "live-server --port=80 --no-browser --entry-file='index.html' --watch=dist/ --wait=100"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.9.1",
+    "firebase": "^3.0.5",
     "material-ui": "^0.15.1",
     "node-uuid": "^1.4.7",
     "react": "^15.1.0",

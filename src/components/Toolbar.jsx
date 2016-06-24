@@ -8,6 +8,7 @@ const MyToolbar = () => {
     <Toolbar>
       <ToolbarGroup firstChild={true} float="left">
         <RaisedButton containerElement={<Link to="/recipes" />} label="Recipes"  />
+        <RaisedButton containerElement={<Link to="/Login" />} label="Login"  />
         <RaisedButton containerElement={<Link to="/About" />} label="About"  />
       </ToolbarGroup>
     </Toolbar>

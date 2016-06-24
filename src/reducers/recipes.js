@@ -1,37 +1,35 @@
 import { combineReducers } from 'redux';
 
-function byId(state={}, action) {
+function byId(state = {}, action) {
   switch (action.type) {
     case 'ADD_RECIPE_SUCCESS':
       return Object.assign(
         {},
         state,
-        {[action.id]: action.response});
+        { [action.id]: action.response });
     case 'FETCH_RECIPES_SUCCESS':
-      const nextState = Object.assign({}, state);
-      action.response.forEach(recipe => {
-        nextState[recipe.id] = recipe;
-      });
-      return nextState;
+      console.log('shape', JSON.stringify(action.response, null, 4));
+
+      return action.response;
   }
 
   return state;
 }
 
-function allIds(state=[], action) {
+function allIds(state = [], action) {
   switch (action.type) {
     case 'ADD_RECIPE_SUCCESS':
       return [...state, action.id];
     case 'FETCH_RECIPES_SUCCESS':
-      console.log('FETCH_RECIPES_SUCCESS', action.response);
-      return action.response.map(r => r.id);
+      console.log('All IDs', Object.keys(action.response));
+      return Object.keys(action.response);
   }
 
   return state;
 }
 
 export function getAllRecipes(state) {
-  return state.allIds.map(id => state.byId[id]);
+  return state.allIds.map(id => Object.assign({}, state.byId[id], { id }));
 }
 
 const isFetching = (state = false, action) => {
@@ -62,5 +60,5 @@ export default combineReducers({
   byId,
   allIds,
   isFetching,
-  errorMessage
+  errorMessage,
 });

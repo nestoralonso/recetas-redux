@@ -27,8 +27,8 @@ const fakeDb = {
       title: 'Lomo al Trapo! Directo en las Brasas!',
       description: 'Técnica para hacer carne 100% al trapo! No saben el sabor que se genera!',
       thumbnailUrl: 'http://img.youtube.com/vi/lQzKDb8VR78/default.jpg',
-    }
-  ]
+    },
+  ],
 };
 
 const delay = (ms) =>
@@ -36,14 +36,20 @@ const delay = (ms) =>
 
 export function fetchRecipes(userId) {
   return delay(300).then(() => {
-    return fakeDb.recipes;
+    return fakeDb
+            .recipes
+            .reduce((dict, x) => {
+              dict[x.id] = x;
+              delete x.id;
+              return dict;
+            }, {});
   });
 }
 
 export function addRecipe(recipe) {
   return delay(300).then(() => {
     const newRecipe = Object.assign({}, recipe, {
-      id: v4()
+      id: v4(),
     });
 
     fakeDb.recipes.push(newRecipe);
