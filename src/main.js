@@ -7,6 +7,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import AppShell from './components/AppShell';
 import RecipeList from './containers/RecipeList';
+import IngredientList from './containers/IngredientList';
 import Login from './containers/Login';
 import About from './components/About';
 import configureStore from './store/configureStore';
@@ -15,7 +16,7 @@ import { fetchRecipes } from './api';
 import { loginPromise } from './api/fb-recipes-api';
 
 const store = configureStore();
-console.log(store);
+console.log('store=', store);
 injectTapEventPlugin();
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -23,6 +24,7 @@ const Root = ({ store }) => (
       <Route path="/" component={AppShell} >
         <IndexRoute component={RecipeList} />
         <Route path="/recipes" component={RecipeList} />
+        <Route path="/ingredients" component={IngredientList} />
         <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
       </Route>

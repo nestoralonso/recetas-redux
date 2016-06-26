@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import recipes from './recipes';
+import user from './user';
+import ingredients from './ingredients';
 
-// Fake reducer for a constant userId
-// todo: replace it with a real user
-const userId = (state = '1', action) => state;
 export default combineReducers({
   recipes,
-  userId,
+  user,
+  ingredients
 });

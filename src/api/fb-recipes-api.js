@@ -17,18 +17,25 @@ export function fetchRecipes() {
     .then(snap => snap.val());
 }
 
+export function addRecipe(recipeData, uid) {
+  let recipeId = firebaseDB.ref().child('recipes').push().key;
+  recipeData.id = recipeId;
+  console.log('recipeId', recipeId);
+
+  let updates = {};
+  updates['/recipes/' + recipeId] = recipeData;
+  updates['/user-recipes/' + uid + '/' + recipeId] = recipeData;
+  let res = firebaseDB.ref().update(updates);
+  res.then(x => console.log(x));
+  return Promise.resolve(recipeData);
+}
+
 export function loginPromise() {
   var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithRedirect(provider);
-
-  return firebase.auth().getRedirectResult().then(function (result) {
+  return firebase.auth().signInWithPopup(provider).then(function (result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     var token = result.credential.accessToken;
-    console.log('token=', result.credential);
-
-    // The signed-in user info.
     var user = result.user;
-    console.log('user=', user);
 
     return user;
   }).catch(function (error) {

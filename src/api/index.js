@@ -1,4 +1,4 @@
-const USE_FIREBASE = true;
+const USE_FIREBASE = false;
 if (USE_FIREBASE) {
   module.exports = require('./fb-recipes-api');
 }

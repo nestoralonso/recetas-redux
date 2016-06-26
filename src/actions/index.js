@@ -21,6 +21,8 @@ export const fetchRecipes = (userId) => (dispatch, getState) => {
       userId,
       response,
     });
+
+    return response;
   },
   error => {
     dispatch({
@@ -31,32 +33,58 @@ export const fetchRecipes = (userId) => (dispatch, getState) => {
   });
 };
 
+export const fetchIngredients = (userId) => (dispatch, getState) => {
+  if (getState().ingredients.isFetching) {
+    return Promise.resolve();
+  }
+
+  dispatch({
+    type: 'FETCH_INGREDIENTS_REQUEST',
+    userId,
+  });
+
+  return api.fetchIngredients(userId).then(response => {
+    dispatch({
+      type: 'FETCH_INGREDIENTS_SUCCESS',
+      userId,
+      response,
+    });
+
+    return response;
+  },
+  error => {
+    dispatch({
+      type: 'FETCH_INGREDIENTS_FAILURE',
+      userId,
+      message: error.message || 'Error fetching recipes',
+    });
+  });
+};
+
 /**
  * This one is a thunk too,
  * returns a promise by convention
  */
-export const addRecipe = (recipe) => (dispatch) => {
-  return api.addRecipe(recipe).then(response => dispatch({
+export const addRecipe = (recipe, uid) => (dispatch) => {
+  return api.addRecipe(recipe, uid).then(response => dispatch({
     type: 'ADD_RECIPE_SUCCESS',
     id: response.id,
     response,
   }));
 };
 
-
-export const loginProcess = () => (dispatch) => {
+export const loginProcess = () => (dispatch, getState) => {
   return api.loginPromise().then(
     user => {
-      console.log(user);
-      dispatch(user => ({
-        type: 'LOGGED_SUCCESS',
+      console.log('user', user);
+      dispatch({
+        type: 'LOGIN_SUCCESS',
         user: {
           userId: user.uid,
           displayName: user.displayName,
           photoURL: user.photoURL,
           email: user.email,
         },
-      }));
-    }
+      })}
   );
 };

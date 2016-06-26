@@ -9,11 +9,10 @@ function byId(state = {}, action) {
         { [action.id]: action.response });
     case 'FETCH_RECIPES_SUCCESS':
       console.log('shape', JSON.stringify(action.response, null, 4));
-
       return action.response;
+    default:
+      return state;
   }
-
-  return state;
 }
 
 function allIds(state = [], action) {

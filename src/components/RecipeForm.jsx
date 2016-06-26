@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 
+import MiniIngredientSearch from './MiniIngredientSearch';
 import { addRecipe } from '../actions';
 
 
@@ -15,7 +16,8 @@ const BLANK_RECIPE = {
   portions: '',
   preparationTime: '',
   cookingTime: '',
-  procedure: ''
+  procedure: '',
+  ingredients: {},
 };
 
 class RecipeForm extends Component {
@@ -33,12 +35,12 @@ class RecipeForm extends Component {
   }
 
   handleOpen() {
-    this.setState({open: true});
+    this.setState({ open: true });
   };
 
   handleClose() {
-    this.props.dispatch(addRecipe(this.state.recipe));
-    this.setState({open: false, recipe: BLANK_RECIPE});
+    this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
+    this.setState({ open: false, recipe: BLANK_RECIPE });
   };
 
   render() {
@@ -60,15 +62,17 @@ class RecipeForm extends Component {
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}
+          autoScrollBodyContent
         >
+          <MiniIngredientSearch />
+          <br />
           <TextField
             hintText="Fried chicken"
             floatingLabelText="Title"
             onChange={this.titleChange}
             value={this.state.recipe.title}
-            />
-          <br/>
+          />
+          <br />
           <TextField
             hintText="This melt in your mouth barbecue ribs recipe will change the way you see the world"
             floatingLabelText="Description"
@@ -76,37 +80,37 @@ class RecipeForm extends Component {
             rowsMax={8}
             onChange={this.descriptionChange}
             value={this.state.recipe.description}
-            />
-          <br/>
+          />
+          <br />
           <TextField
             hintText="4"
             floatingLabelText="Number of portions"
             onChange={this.portionsChange}
             value={this.state.recipe.portions}
-            />
-          <br/>
+          />
+          <br />
           <TextField
             hintText="30"
             floatingLabelText="Preparation time in minutes"
             onChange={this.preparationTimeChange}
             value={this.state.recipe.preparationTime}
-            />
-          <br/>
+          />
+          <br />
           <TextField
             hintText="60"
             floatingLabelText="How long it will take to cook"
             onChange={this.cookingTimeChange}
             value={this.state.recipe.cookingTime}
-            />
-          <br/>
+          />
+          <br />
           <TextField
             hintText="Add garlic and cook until onions and garlic are soft, 5 minutes. Add peppers and cook"
-            floatingLabelText="Procudure"
+            floatingLabelText="Procedure"
             rows={4}
             rowsMax={8}
             onChange={this.procedureChange}
             value={this.state.recipe.procedure}
-            />
+          />
         </Dialog>
 
       </div>
@@ -116,8 +120,8 @@ class RecipeForm extends Component {
   updateStateFromInput(inputEvt, propName) {
     this.setState({
       recipe: Object.assign({}, this.state.recipe, {
-          [propName]: inputEvt.target.value
-      })
+        [propName]: inputEvt.target.value,
+      }),
     });
   }
 
@@ -142,7 +146,10 @@ class RecipeForm extends Component {
 }
 
 RecipeForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(RecipeForm);
+const mapStateToProps = (state) => ({
+  userId: state.user.userId,
+});
+export default connect(mapStateToProps)(RecipeForm);

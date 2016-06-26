@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { List, ListItem } from 'material-ui/List';
 
-import Recipe from '../components/Recipe.jsx';
+import RecipeItem from '../components/RecipeItem';
 import { getAllRecipes } from '../reducers/recipes';
 import * as actions from '../actions';
 
@@ -26,7 +26,7 @@ class RecipeList extends Component {
     return (
       <List>
         {recipes.map(recipe => <ListItem key={recipe.id}>
-          <Recipe recipe={recipe} />
+          <RecipeItem recipe={recipe} />
         </ListItem>)}
       </List>);
   }
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => ({
   recipes: getAllRecipes(state.recipes),
   isFetching: state.recipes.isFetching,
   error: state.recipes.errorMessage,
-  userId: state.userId,
+  userId: state.user.userId,
 });
 
 RecipeList = connect(mapStateToProps, { fetchRecipes: actions.fetchRecipes })(RecipeList);

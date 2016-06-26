@@ -31,3 +31,24 @@ html {
 .recipe-item__description {
   margin-top: 1em;
 }
+
+
+.ingredient-item {
+
+}
+
+.ingredient-item__thumbnail {
+  display: inline-block;
+}
+
+.ingredient-item__block {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 1em;
+}
+
+.ingredient-item__name {
+  font-weight: 500;
+  margin-top: 1em;
+  font-size: 1.2em;
+}
