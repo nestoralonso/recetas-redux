@@ -6,5 +6,5 @@ import ingredients from './ingredients';
 export default combineReducers({
   recipes,
   user,
-  ingredients
+  ingredients,
 });

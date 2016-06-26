@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { List, ListItem } from 'material-ui/List';
 
-import RecipeItem from '../components/RecipeItem';
+import RecipeItem from '../components/RecipeItem.jsx';
 import { getAllRecipes } from '../reducers/recipes';
 import * as actions from '../actions';
 

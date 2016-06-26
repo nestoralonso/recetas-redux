@@ -7,7 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 const loggerMiddleware = createLogger();
 
 export default function configureStore(initialState) {
-  return  createStore(
+  return createStore(
             mainReducer,
             initialState,
             compose(

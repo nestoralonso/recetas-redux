@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import AppShell from './components/AppShell';
-import RecipeList from './containers/RecipeList';
-import IngredientList from './containers/IngredientList';
-import Login from './containers/Login';
-import About from './components/About';
+import AppShell from './components/AppShell.jsx';
+import RecipeList from './containers/RecipeList.jsx';
+import IngredientList from './containers/IngredientList.jsx';
+import Login from './containers/Login.jsx';
+import About from './components/About.jsx';
 import configureStore from './store/configureStore';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { fetchRecipes } from './api';

@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 
-import MiniIngredientSearch from './MiniIngredientSearch';
+import MiniIngredientSearch from './MiniIngredientSearch.jsx';
 import { addRecipe } from '../actions';
 
 

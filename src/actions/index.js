@@ -85,6 +85,6 @@ export const loginProcess = () => (dispatch, getState) => {
           photoURL: user.photoURL,
           email: user.email,
         },
-      })}
+      }); }
   );
 };

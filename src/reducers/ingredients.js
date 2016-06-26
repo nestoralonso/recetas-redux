@@ -12,7 +12,7 @@ import { combineReducers } from 'redux';
  * }
  */
 
-export const byId = (state={}, action) => {
+export const byId = (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_INGREDIENTS_SUCCESS':
       console.log('action.response=', action.response);
@@ -20,7 +20,7 @@ export const byId = (state={}, action) => {
     default:
       return state;
   }
-}
+};
 
 
 const isFetching = (state = false, action) => {
@@ -50,5 +50,5 @@ const errorMessage = (state = null, action) => {
 export default combineReducers({
   byId,
   isFetching,
-  errorMessage
-})
+  errorMessage,
+});
