@@ -89668,6 +89668,8 @@ exports.addRecipe = addRecipe;
 
 var _nodeUuid = require('node-uuid');
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  *
 Spanish (Argentina)   es-ar
@@ -89759,10 +89761,14 @@ function searchIngredients(name) {
   var ings = fakeDb.ingredients;
   return delay(300).then(function () {
     return Object.keys(ings).map(function (key) {
-      return ings[key];
+      return [key, ings[key]];
     }).filter(function (ing) {
-      return ing.name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase());
-    });
+      return ing[1].name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase());
+    }).reduce(function (prev, curr) {
+      var keyIng = curr[0];
+      var ingre = curr[1];
+      return Object.assign(prev, _defineProperty({}, keyIng, ingre));
+    }, {});
   });
 }
 
@@ -90059,9 +90065,25 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _TextField = require('material-ui/TextField');
 
 var _TextField2 = _interopRequireDefault(_TextField);
+
+var _Menu = require('material-ui/Menu');
+
+var _Menu2 = _interopRequireDefault(_Menu);
+
+var _MenuItem = require('material-ui/MenuItem');
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+var _Popover = require('material-ui/Popover');
+
+var _Popover2 = _interopRequireDefault(_Popover);
 
 var _search = require('material-ui/svg-icons/action/search');
 
@@ -90090,7 +90112,10 @@ var MiniIngredientSearch = function (_Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MiniIngredientSearch).call(this, props));
 
     _this.state = {
-      searchText: ''
+      searchText: '',
+      showPop: false,
+      popupAnchorEl: null,
+      searchResults: {}
     };
 
     [_this.onChange, _this.onSearchPressed].forEach(function (f) {
@@ -90101,10 +90126,19 @@ var MiniIngredientSearch = function (_Component) {
 
   _createClass(MiniIngredientSearch, [{
     key: 'onSearchPressed',
-    value: function onSearchPressed(e) {
-      console.log('hello=', e);
+    value: function onSearchPressed() {
+      var _this2 = this;
+
+      this.setState({
+        showPop: true,
+        popupAnchorEl: _reactDom2.default.findDOMNode(this.refs.searchTF)
+      });
+
+      console.log('this.refs.searchTF=', this.refs.searchTF);
       (0, _api.searchIngredients)(this.state.searchText).then(function (res) {
-        return console.log(res);
+        _this2.setState({
+          searchResults: res
+        });
       });
     }
   }, {
@@ -90115,16 +90149,48 @@ var MiniIngredientSearch = function (_Component) {
       });
     }
   }, {
+    key: 'handleTouchTap',
+    value: function handleTouchTap(e, menuItem) {
+      console.log('tapa tapa', menuItem, menuItem.key);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       return _react2.default.createElement(
         'form',
         { onSubmit: this.onSearchPressed },
-        _react2.default.createElement(_TextField2.default, { hintText: 'cilantro', onChange: this.onChange }),
+        _react2.default.createElement(_TextField2.default, { ref: 'searchTF', hintText: 'cilantro', onChange: this.onChange }),
         _react2.default.createElement(
           _IconButton2.default,
           { tooltip: 'Search', onClick: this.onSearchPressed, tooltipPosition: 'top-right' },
           _react2.default.createElement(_search2.default, null)
+        ),
+        _react2.default.createElement(
+          _Popover2.default,
+          {
+            open: this.state.showPop,
+            anchorEl: this.state.popupAnchorEl,
+            useLayerForClickAway: false,
+            anchorOrigin: { horizontal: 'left', vertical: 'bottom' },
+            targetOrigin: { horizontal: 'left', vertical: 'top' }
+          },
+          _react2.default.createElement(
+            _Menu2.default,
+            {
+              ref: 'menu',
+              autoWidth: false,
+              onItemTouchTap: this.handleTouchTap
+            },
+            Object.keys(this.state.searchResults).map(function (keyIng) {
+              return _react2.default.createElement(_MenuItem2.default, {
+                key: keyIng,
+                ingredient: _this3.state.searchResults[keyIng],
+                primaryText: _this3.state.searchResults[keyIng].name
+              });
+            })
+          )
         )
       );
     }
@@ -90135,7 +90201,7 @@ var MiniIngredientSearch = function (_Component) {
 
 exports.default = MiniIngredientSearch;
 
-},{"../api":1043,"material-ui/IconButton":641,"material-ui/TextField":704,"material-ui/svg-icons/action/search":751,"react":991}],1048:[function(require,module,exports){
+},{"../api":1043,"material-ui/IconButton":641,"material-ui/Menu":652,"material-ui/MenuItem":655,"material-ui/Popover":661,"material-ui/TextField":704,"material-ui/svg-icons/action/search":751,"react":991,"react-dom":798}],1048:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

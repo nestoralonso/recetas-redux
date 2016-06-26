@@ -87,11 +87,17 @@ export function searchIngredients(name) {
   const ings = fakeDb.ingredients;
   return delay(300).
     then(() => Object.keys(ings)
-      .map(key => ings[key])
+      .map(key => [key, ings[key]])
       .filter(ing =>
-        ing.name
+        ing[1].name
         .toLocaleLowerCase()
-        .startsWith(name.toLocaleLowerCase())));
+        .startsWith(name.toLocaleLowerCase()))
+        .reduce((prev, curr) => {
+          const keyIng = curr[0];
+          const ingre = curr[1];
+          return Object.assign(prev, { [keyIng]: ingre });
+        }, {})
+    );
 }
 
 export function loginPromise() {
