@@ -48,4 +48,5 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 
 ## DREAM TODOS
 - [ ] Implement it as PWA (Progressive Web App)
+- [ ] Given an ingredient, search recipes based on it
 - [ ] Add i18n to the strings

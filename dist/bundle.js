@@ -90115,10 +90115,11 @@ var MiniIngredientSearch = function (_Component) {
       searchText: '',
       showPop: false,
       popupAnchorEl: null,
-      searchResults: {}
+      searchResults: []
     };
 
-    [_this.onChange, _this.onSearchPressed].forEach(function (f) {
+    console.log('===ingSel=', _this.props.onIngredientSelected);
+    [_this.onChange, _this.onSearchPressed, _this.handleTouchTap].forEach(function (f) {
       _this[f.name] = f.bind(_this);
     });
     return _this;
@@ -90134,10 +90135,18 @@ var MiniIngredientSearch = function (_Component) {
         popupAnchorEl: _reactDom2.default.findDOMNode(this.refs.searchTF)
       });
 
-      console.log('this.refs.searchTF=', this.refs.searchTF);
-      (0, _api.searchIngredients)(this.state.searchText).then(function (res) {
+      var searchText = this.state.searchText;
+
+      (0, _api.searchIngredients)(searchText).then(function (res) {
+        var apiIngredients = _this2.resultsAsList(res);
+
+        // TODO: implement create new ingredient in this form
+        apiIngredients.push({
+          key: 'key-' + searchText,
+          value: { name: 'create ' + searchText }
+        });
         _this2.setState({
-          searchResults: res
+          searchResults: apiIngredients
         });
       });
     }
@@ -90151,13 +90160,25 @@ var MiniIngredientSearch = function (_Component) {
   }, {
     key: 'handleTouchTap',
     value: function handleTouchTap(e, menuItem) {
-      console.log('tapa tapa', menuItem, menuItem.key);
+      this.props.onIngredientSelected(menuItem.props.ingredient, menuItem.key);
+    }
+
+    /**
+     * @param {Object} response  a key-value of the api results
+     *
+     * @returns {Array} a list representation of the above to be consumable by map
+     */
+
+  }, {
+    key: 'resultsAsList',
+    value: function resultsAsList(response) {
+      return Object.keys(response).map(function (key) {
+        return { key: key, value: response[key] };
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
-
       return _react2.default.createElement(
         'form',
         { onSubmit: this.onSearchPressed },
@@ -90183,11 +90204,11 @@ var MiniIngredientSearch = function (_Component) {
               autoWidth: false,
               onItemTouchTap: this.handleTouchTap
             },
-            Object.keys(this.state.searchResults).map(function (keyIng) {
+            this.state.searchResults.map(function (entry) {
               return _react2.default.createElement(_MenuItem2.default, {
-                key: keyIng,
-                ingredient: _this3.state.searchResults[keyIng],
-                primaryText: _this3.state.searchResults[keyIng].name
+                key: entry.key,
+                ingredient: entry.value,
+                primaryText: entry.value.name
               });
             })
           )
@@ -90198,6 +90219,10 @@ var MiniIngredientSearch = function (_Component) {
 
   return MiniIngredientSearch;
 }(_react.Component);
+
+MiniIngredientSearch.propTypes = {
+  onIngredientSelected: _react.PropTypes.func.isRequired
+};
 
 exports.default = MiniIngredientSearch;
 
@@ -90295,6 +90320,8 @@ var _actions = require('../actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -90310,7 +90337,13 @@ var BLANK_RECIPE = {
   preparationTime: '',
   cookingTime: '',
   procedure: '',
-  ingredients: {}
+  ingredientQuantities: [{
+    key: 'panceta',
+    value: {
+      quantity: 1,
+      unit: 'spoons',
+      ingredient: { name: 'panceta' }
+    } }]
 };
 
 var RecipeForm = function (_Component) {
@@ -90326,7 +90359,8 @@ var RecipeForm = function (_Component) {
       recipe: BLANK_RECIPE
     };
 
-    var _arr = ['handleOpen', 'handleClose', 'titleChange', 'descriptionChange', 'portionsChange', 'preparationTimeChange', 'cookingTimeChange', 'procedureChange'];
+    console.log('ingQua=', _this.state.recipe.ingredientQuantities);
+    var _arr = ['handleOpen', 'handleClose', 'titleChange', 'descriptionChange', 'portionsChange', 'preparationTimeChange', 'cookingTimeChange', 'procedureChange', 'onIngredientSelected'];
     for (var _i = 0; _i < _arr.length; _i++) {
       var fName = _arr[_i];
       _this[fName] = _this[fName].bind(_this);
@@ -90346,6 +90380,62 @@ var RecipeForm = function (_Component) {
       this.setState({ open: false, recipe: BLANK_RECIPE });
     }
   }, {
+    key: 'updateStateFromInput',
+    value: function updateStateFromInput(inputEvt, propName) {
+      this.setState({
+        recipe: Object.assign({}, this.state.recipe, _defineProperty({}, propName, inputEvt.target.value))
+      });
+    }
+  }, {
+    key: 'titleChange',
+    value: function titleChange(e) {
+      this.updateStateFromInput(e, 'title');
+    }
+  }, {
+    key: 'descriptionChange',
+    value: function descriptionChange(e) {
+      this.updateStateFromInput(e, 'description');
+    }
+  }, {
+    key: 'portionsChange',
+    value: function portionsChange(e) {
+      this.updateStateFromInput(e, 'portions');
+    }
+  }, {
+    key: 'preparationTimeChange',
+    value: function preparationTimeChange(e) {
+      this.updateStateFromInput(e, 'preparationTime');
+    }
+  }, {
+    key: 'cookingTimeChange',
+    value: function cookingTimeChange(e) {
+      this.updateStateFromInput(e, 'cookingTime');
+    }
+  }, {
+    key: 'procedureChange',
+    value: function procedureChange(e) {
+      this.updateStateFromInput(e, 'procedure');
+    }
+  }, {
+    key: 'onIngredientSelected',
+    value: function onIngredientSelected(ingredient, key) {
+      console.log('onIngredientSelected=', ingredient, key);
+      var recipe = this.state.recipe;
+
+      var ingQuants = recipe.ingredientQuantities;
+      var newIngQuant = {
+        key: key,
+        value: {
+          quantity: 0,
+          unit: 'ounces',
+          ingredient: ingredient
+        }
+      };
+      this.setState({
+        recipe: Object.assign({}, recipe, { ingredientQuantities: [].concat(_toConsumableArray(ingQuants), [newIngQuant]) })
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var actions = [_react2.default.createElement(_FlatButton2.default, {
@@ -90354,6 +90444,9 @@ var RecipeForm = function (_Component) {
         keyboardFocused: true,
         onTouchTap: this.handleClose
       })];
+
+      var recipe = this.state.recipe;
+      var ingredientQuantities = recipe.ingredientQuantities;
 
       return _react2.default.createElement(
         'div',
@@ -90369,7 +90462,19 @@ var RecipeForm = function (_Component) {
             onRequestClose: this.handleClose,
             autoScrollBodyContent: true
           },
-          _react2.default.createElement(_MiniIngredientSearch2.default, null),
+          _react2.default.createElement(
+            'div',
+            { className: 'recipe-form__title-section' },
+            'Ingredients'
+          ),
+          ingredientQuantities.map(function (x) {
+            return _react2.default.createElement(
+              'span',
+              { key: x.key },
+              x.value.ingredient.name
+            );
+          }),
+          _react2.default.createElement(_MiniIngredientSearch2.default, { onIngredientSelected: this.onIngredientSelected }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(_TextField2.default, {
             hintText: 'Fried chicken',
@@ -90418,43 +90523,6 @@ var RecipeForm = function (_Component) {
           })
         )
       );
-    }
-  }, {
-    key: 'updateStateFromInput',
-    value: function updateStateFromInput(inputEvt, propName) {
-      this.setState({
-        recipe: Object.assign({}, this.state.recipe, _defineProperty({}, propName, inputEvt.target.value))
-      });
-    }
-  }, {
-    key: 'titleChange',
-    value: function titleChange(e) {
-      this.updateStateFromInput(e, 'title');
-    }
-  }, {
-    key: 'descriptionChange',
-    value: function descriptionChange(e) {
-      this.updateStateFromInput(e, 'description');
-    }
-  }, {
-    key: 'portionsChange',
-    value: function portionsChange(e) {
-      this.updateStateFromInput(e, 'portions');
-    }
-  }, {
-    key: 'preparationTimeChange',
-    value: function preparationTimeChange(e) {
-      this.updateStateFromInput(e, 'preparationTime');
-    }
-  }, {
-    key: 'cookingTimeChange',
-    value: function cookingTimeChange(e) {
-      this.updateStateFromInput(e, 'cookingTime');
-    }
-  }, {
-    key: 'procedureChange',
-    value: function procedureChange(e) {
-      this.updateStateFromInput(e, 'procedure');
     }
   }]);
 
@@ -91024,7 +91092,6 @@ var byId = exports.byId = function byId() {
 
   switch (action.type) {
     case 'FETCH_INGREDIENTS_SUCCESS':
-      console.log('action.response=', action.response);
       return action.response;
     default:
       return state;
@@ -91089,7 +91156,6 @@ function byId() {
     case 'ADD_RECIPE_SUCCESS':
       return Object.assign({}, state, _defineProperty({}, action.id, action.response));
     case 'FETCH_RECIPES_SUCCESS':
-      console.log('shape', JSON.stringify(action.response, null, 4));
       return action.response;
     default:
       return state;
@@ -91104,11 +91170,10 @@ function allIds() {
     case 'ADD_RECIPE_SUCCESS':
       return [].concat(_toConsumableArray(state), [action.id]);
     case 'FETCH_RECIPES_SUCCESS':
-      console.log('All IDs', Object.keys(action.response));
       return Object.keys(action.response);
+    default:
+      return state;
   }
-
-  return state;
 }
 
 function getAllRecipes(state) {

@@ -16,42 +16,102 @@ const BLANK_RECIPE = {
   preparationTime: '',
   cookingTime: '',
   procedure: '',
-  ingredients: {},
+  ingredientQuantities: [{
+    key: 'panceta',
+    value: {
+      quantity: 1,
+      unit: 'spoons',
+      ingredient: { name: 'panceta' },
+    } }],
 };
 
 class RecipeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open : false,
-      recipe: BLANK_RECIPE
-    }
+      open: false,
+      recipe: BLANK_RECIPE,
+    };
 
-    for(let fName of ['handleOpen', 'handleClose', 'titleChange', 'descriptionChange', 'portionsChange',
-                      'preparationTimeChange', 'cookingTimeChange', 'procedureChange']) {
+    console.log('ingQua=', this.state.recipe.ingredientQuantities);
+    for (const fName of ['handleOpen', 'handleClose', 'titleChange',
+                      'descriptionChange', 'portionsChange',
+                      'preparationTimeChange', 'cookingTimeChange',
+                      'procedureChange', 'onIngredientSelected']) {
       this[fName] = this[fName].bind(this);
     }
   }
 
   handleOpen() {
     this.setState({ open: true });
-  };
+  }
 
   handleClose() {
     this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
     this.setState({ open: false, recipe: BLANK_RECIPE });
-  };
+  }
+
+  updateStateFromInput(inputEvt, propName) {
+    this.setState({
+      recipe: Object.assign({}, this.state.recipe, {
+        [propName]: inputEvt.target.value,
+      }),
+    });
+  }
+
+  titleChange(e) {
+    this.updateStateFromInput(e, 'title');
+  }
+
+  descriptionChange(e) {
+    this.updateStateFromInput(e, 'description');
+  }
+
+  portionsChange(e) {
+    this.updateStateFromInput(e, 'portions');
+  }
+
+  preparationTimeChange(e) {
+    this.updateStateFromInput(e, 'preparationTime');
+  }
+
+  cookingTimeChange(e) {
+    this.updateStateFromInput(e, 'cookingTime');
+  }
+
+  procedureChange(e) {
+    this.updateStateFromInput(e, 'procedure');
+  }
+
+  onIngredientSelected(ingredient, key) {
+    console.log('onIngredientSelected=', ingredient, key);
+    const { recipe } = this.state;
+    const ingQuants = recipe.ingredientQuantities;
+    const newIngQuant = {
+      key,
+      value: {
+        quantity: 0,
+        unit: 'ounces',
+        ingredient,
+      },
+    };
+    this.setState({
+      recipe: Object.assign({}, recipe, { ingredientQuantities: [...ingQuants, newIngQuant] }),
+    });
+  }
 
   render() {
     const actions = [
       <FlatButton
         label="Ok"
-        primary={true}
-        keyboardFocused={true}
+        primary
+        keyboardFocused
         onTouchTap={this.handleClose}
       />,
     ];
 
+    const { recipe } = this.state;
+    const { ingredientQuantities } = recipe;
     return (
       <div>
         <RaisedButton label="New Recipe" onTouchTap={this.handleOpen} />
@@ -63,7 +123,9 @@ class RecipeForm extends Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent
         >
-          <MiniIngredientSearch />
+          <div className="recipe-form__title-section">Ingredients</div>
+          {ingredientQuantities.map(x => <span key={x.key}>{x.value.ingredient.name}</span>)}
+          <MiniIngredientSearch onIngredientSelected={this.onIngredientSelected} />
           <br />
           <TextField
             hintText="Fried chicken"
@@ -114,33 +176,6 @@ class RecipeForm extends Component {
 
       </div>
     );
-  }
-
-  updateStateFromInput(inputEvt, propName) {
-    this.setState({
-      recipe: Object.assign({}, this.state.recipe, {
-        [propName]: inputEvt.target.value,
-      }),
-    });
-  }
-
-  titleChange(e) {
-    this.updateStateFromInput(e, 'title');
-  }
-  descriptionChange(e) {
-    this.updateStateFromInput(e, 'description');
-  }
-  portionsChange(e) {
-    this.updateStateFromInput(e, 'portions');
-  }
-  preparationTimeChange(e) {
-    this.updateStateFromInput(e, 'preparationTime');
-  }
-  cookingTimeChange(e) {
-    this.updateStateFromInput(e, 'cookingTime');
-  }
-  procedureChange(e) {
-    this.updateStateFromInput(e, 'procedure');
   }
 }
 

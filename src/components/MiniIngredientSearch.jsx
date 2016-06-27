@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import TextField from 'material-ui/TextField';
 import Menu from 'material-ui/Menu';
@@ -16,10 +16,11 @@ class MiniIngredientSearch extends Component {
       searchText: '',
       showPop: false,
       popupAnchorEl: null,
-      searchResults: {},
+      searchResults: [],
     };
 
-    [this.onChange, this.onSearchPressed].forEach(f => {
+    console.log('===ingSel=', this.props.onIngredientSelected);
+    [this.onChange, this.onSearchPressed, this.handleTouchTap].forEach(f => {
       this[f.name] = f.bind(this);
     });
   }
@@ -30,10 +31,17 @@ class MiniIngredientSearch extends Component {
       popupAnchorEl: ReactDOM.findDOMNode(this.refs.searchTF),
     });
 
-    console.log('this.refs.searchTF=', this.refs.searchTF);
-    searchIngredients(this.state.searchText).then(res => {
+    const { searchText } = this.state;
+    searchIngredients(searchText).then(res => {
+      const apiIngredients = this.resultsAsList(res);
+
+      // TODO: implement create new ingredient in this form
+      apiIngredients.push({
+        key: `key-${searchText}`,
+        value: { name: `create ${searchText}` },
+      });
       this.setState({
-        searchResults: res,
+        searchResults: apiIngredients,
       });
     });
   }
@@ -45,7 +53,16 @@ class MiniIngredientSearch extends Component {
   }
 
   handleTouchTap(e, menuItem) {
-    console.log('tapa tapa', menuItem, menuItem.key);
+    this.props.onIngredientSelected(menuItem.props.ingredient, menuItem.key);
+  }
+
+  /**
+   * @param {Object} response  a key-value of the api results
+   *
+   * @returns {Array} a list representation of the above to be consumable by map
+   */
+  resultsAsList(response) {
+    return Object.keys(response).map(key => ({ key, value: response[key] }));
   }
 
   render() {
@@ -68,11 +85,11 @@ class MiniIngredientSearch extends Component {
             autoWidth={false}
             onItemTouchTap={this.handleTouchTap}
           >
-            {Object.keys(this.state.searchResults).map(keyIng =>
+            {this.state.searchResults.map(entry =>
               <MenuItem
-                key={keyIng}
-                ingredient={this.state.searchResults[keyIng]}
-                primaryText={this.state.searchResults[keyIng].name}
+                key={entry.key}
+                ingredient={entry.value}
+                primaryText={entry.value.name}
               />
             )}
           </Menu>
@@ -81,5 +98,8 @@ class MiniIngredientSearch extends Component {
     );
   }
 }
+MiniIngredientSearch.propTypes = {
+  onIngredientSelected: PropTypes.func.isRequired,
+};
 
 export default MiniIngredientSearch;

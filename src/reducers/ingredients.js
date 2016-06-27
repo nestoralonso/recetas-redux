@@ -15,7 +15,6 @@ import { combineReducers } from 'redux';
 export const byId = (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_INGREDIENTS_SUCCESS':
-      console.log('action.response=', action.response);
       return action.response;
     default:
       return state;

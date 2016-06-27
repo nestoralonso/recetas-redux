@@ -8,7 +8,6 @@ function byId(state = {}, action) {
         state,
         { [action.id]: action.response });
     case 'FETCH_RECIPES_SUCCESS':
-      console.log('shape', JSON.stringify(action.response, null, 4));
       return action.response;
     default:
       return state;
@@ -20,11 +19,10 @@ function allIds(state = [], action) {
     case 'ADD_RECIPE_SUCCESS':
       return [...state, action.id];
     case 'FETCH_RECIPES_SUCCESS':
-      console.log('All IDs', Object.keys(action.response));
       return Object.keys(action.response);
+    default:
+      return state;
   }
-
-  return state;
 }
 
 export function getAllRecipes(state) {
