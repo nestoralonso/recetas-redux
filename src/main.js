@@ -20,7 +20,7 @@ console.log('store=', store);
 injectTapEventPlugin();
 const Root = ({ store }) => (
   <Provider store={store}>
-    <Router history={browserHistory} >
+    <Router history={browserHistory}>
       <Route path="/" component={AppShell} >
         <IndexRoute component={RecipeList} />
         <Route path="/recipes" component={RecipeList} />

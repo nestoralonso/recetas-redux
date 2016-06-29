@@ -19,7 +19,6 @@ class MiniIngredientSearch extends Component {
       searchResults: [],
     };
 
-    console.log('===ingSel=', this.props.onIngredientSelected);
     [this.onChange, this.onSearchPressed, this.handleTouchTap].forEach(f => {
       this[f.name] = f.bind(this);
     });

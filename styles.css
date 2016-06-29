@@ -33,7 +33,7 @@ html {
 }
 
 .recipe-form__title-section {
-  font-size: 1.2em; 
+  font-size: 1.2em;
 }
 
 .ingredient-item {
@@ -54,4 +54,8 @@ html {
   font-weight: 500;
   margin-top: 1em;
   font-size: 1.2em;
+}
+
+.ing-quantity__name {
+  display: inline-block;
 }

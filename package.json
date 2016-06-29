@@ -8,7 +8,8 @@
     "watch": "onchange src -- npm run build:dev",
     "lint-fix": "eslint --fix src/",
     "browser": "live-server --entry-file='index.html' --watch=dist/ --wait=100  --no-browser",
-    "browser80": "live-server --port=80 --no-browser --entry-file='index.html' --watch=dist/ --wait=100"
+    "browser80": "live-server --port=80 --no-browser --entry-file='index.html' --watch=dist/ --wait=100",
+    "test": "mocha test/ --compilers js:babel-register --recursive --reporter spec"
   },
   "keywords": [],
   "author": "",
@@ -16,18 +17,28 @@
   "description": "",
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "cross-env": "^1.0.8",
+    "enzyme": "^2.3.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.9.2",
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
+    "jsdom": "^9.3.0",
     "live-server": "^1.0.0",
+    "mocha": "^2.5.3",
+    "mocha-jsdom": "^1.1.0",
     "npm-run-all": "^2.1.1",
-    "onchange": "^2.4.0"
+    "onchange": "^2.4.0",
+    "react-hot-loader": "^3.0.0-beta.1",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.9.1",

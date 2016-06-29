@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import MiniIngredientSearch from './MiniIngredientSearch.jsx';
+import IngredientQuantity from './IngredientQuantity.jsx';
 import { addRecipe } from '../actions';
 
 
@@ -124,18 +125,22 @@ class RecipeForm extends Component {
           autoScrollBodyContent
         >
           <div className="recipe-form__title-section">Ingredients</div>
-          {ingredientQuantities.map(x => <span key={x.key}>{x.value.ingredient.name}</span>)}
+          {ingredientQuantities.map(x =>
+            <IngredientQuantity
+              key={x.key}
+              ingredientName={x.value.ingredient.name}
+            />)}
           <MiniIngredientSearch onIngredientSelected={this.onIngredientSelected} />
           <br />
           <TextField
-            hintText="Fried chicken"
+            hintText="Fried pork"
             floatingLabelText="Title"
             onChange={this.titleChange}
             value={this.state.recipe.title}
           />
           <br />
           <TextField
-            hintText="This melt in your mouth barbecue ribs recipe will change the way you see the world"
+            hintText="This recipe will change the way you see the world"
             floatingLabelText="Description"
             rows={4}
             rowsMax={8}
