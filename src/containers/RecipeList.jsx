@@ -18,7 +18,9 @@ class RecipeList extends Component {
 
   fetchData() {
     const { fetchRecipes, userId } = this.props;
-    fetchRecipes();
+
+    // TODO: fix this baked id
+    fetchRecipes('user-1');
   }
 
   render() {

@@ -37,10 +37,18 @@ const styles = {
 class IngredientQuantity extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      selectedUnit: constants.DEFAULT_UNIT,
+    };
+
     this.handleChange = this.handleChange.bind(this);
   }
-  handleChange() {
 
+  handleChange(e, val, payload) {
+    this.setState({
+      selectedUnit: payload,
+    });
   }
 
   render() {
@@ -56,8 +64,8 @@ class IngredientQuantity extends Component {
         />
         <SelectField
           style={styles.unit}
+          value={this.state.selectedUnit}
           onChange={this.handleChange}
-          value={constants.DEFAULT_UNIT}
         >
           {constants.getUnits().map(entry =>
             <MenuItem

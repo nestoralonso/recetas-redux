@@ -1,6 +1,6 @@
 import { v4 } from 'node-uuid';
-
-
+import { UNITS } from '../constants';
+import * as utils from './utils';
 /**
  *
 Spanish (Argentina)   es-ar
@@ -33,6 +33,14 @@ const ingredients = {
       'es-es': 'culantro',
     },
   },
+  fake_toc: {
+    name: 'tocineta',
+    localizations: {
+      'es-co': 'tocineta',
+      'es-pe': 'beicon',
+      'es-es': 'panceta',
+    },
+  },
 };
 
 const recipes = {
@@ -40,24 +48,43 @@ const recipes = {
     title: 'Bondiola Braseada a la Cerveza!',
     description: 'Tremenda receta para hacer una Bondiola a puro Sabor',
     thumbnailUrl: 'http://img.youtube.com/vi/1pwLAJlM4H4/default.jpg',
+    userId: 'user-1',
+    ingredientQuantities: {
+      fake_toc: {
+        quantity: 1,
+        unit: UNITS.POUND,
+        ingredient: { name: 'tocineta' },
+      },
+      fake_cil: {
+        quantity: 100,
+        unit: UNITS.GRAM,
+        ingredient: { name: 'cilantro' },
+      },
+    },
   },
   fake_a2: {
     title: 'Matambre Arrollado DELICIA TOTAL',
     description: 'Una combinación que va a explotar los paladares de tus comensales!',
     thumbnailUrl: 'http://img.youtube.com/vi/GeAquSuYfnc/default.jpg',
+    userId: 'user-1',
   },
 };
 
 const fakeDb = {
   ingredients,
   recipes,
+  'user-recipes': {
+    'user-1': recipes,
+  },
 };
 
 const delay = (ms) =>
   new Promise(resolve => setTimeout(resolve, ms));
 
 export function fetchRecipes(userId) {
-  return delay(300).then(() => fakeDb.recipes);
+  if (!userId) return {};
+  const userRecipes = fakeDb['user-recipes'][userId];
+  return delay(300).then(() => userRecipes || {});
 }
 
 export function fetchIngredients(userId) {
@@ -96,13 +123,16 @@ export function loginPromise() {
   }));
 }
 
-export function addRecipe(recipe) {
+export function addRecipe(recipeForm) {
   return delay(300).then(() => {
     const newKey = v4();
-    const newRecipe = Object.assign({}, recipe, { id: newKey });
+    const newRecipe = utils.convertRecipeToFB(recipeForm);
+    newRecipe.id = newKey;
+    const newIngs = utils.getNewIngredients(recipeForm);
+    console.log('newIngs=', newIngs);
     fakeDb.recipes[newKey] = newRecipe;
+    fakeDb.ingredients = Object.assign({}, ingredients, newIngs);
 
-    console.log('newRecipe=', newRecipe);
     return newRecipe;
   });
 }

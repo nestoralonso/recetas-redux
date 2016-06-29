@@ -117,7 +117,7 @@ class MiniIngredientSearch extends Component {
                 style={styles.menu}
                 ingredient={entry.value}
                 primaryText={entry.value.isNew ?
-                  `create new ${entry.value.name}`
+                  `create new ingredient "${entry.value.name}"`
                   : entry.value.name}
                 leftIcon={entry.value.isNew ? <PersonAdd /> : null}
               />
