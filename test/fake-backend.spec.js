@@ -55,8 +55,12 @@ describe('Fake backend', function () {
   });
 
   it('should return an object containing ingredients to create', function () {
-    const recipe = getNewIngredients(inputData);
-    expect(recipe).to.not.be.null;
-    expect(recipe.ingredientQuantities).to.be.an.object;
+    const ings = getNewIngredients(inputData);
+    console.log('ings=', Object.keys(ings).length);
+    expect(ings).to.not.be.null;
+    expect(ings).to.be.an.object;
+
+    const keys = Object.keys(ings);
+    expect(keys.length).to.equal(2);
   });
 });
