@@ -7,8 +7,13 @@ import Popover from 'material-ui/Popover';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 import IconButton from 'material-ui/IconButton';
 import { searchIngredients } from '../api';
+import PersonAdd from 'material-ui/svg-icons/social/person-add';
 
-
+const styles = {
+  menuItem: {
+    width: '14em',
+  },
+};
 class MiniIngredientSearch extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +24,8 @@ class MiniIngredientSearch extends Component {
       searchResults: [],
     };
 
-    [this.onChange, this.onSearchPressed, this.handleTouchTap].forEach(f => {
+    [this.onChange, this.onSearchPressed,
+    this.handleTouchTap, this.handleRequestClose].forEach(f => {
       this[f.name] = f.bind(this);
     });
   }
@@ -34,10 +40,13 @@ class MiniIngredientSearch extends Component {
     searchIngredients(searchText).then(res => {
       const apiIngredients = this.resultsAsList(res);
 
-      // TODO: implement create new ingredient in this form
+      // TODO: add a fake item to pass the option of create a new ingredient
       apiIngredients.push({
         key: `key-${searchText}`,
-        value: { name: `create ${searchText}` },
+        value: {
+          name: `${searchText}`,
+          isNew: true,
+        },
       });
       this.setState({
         searchResults: apiIngredients,
@@ -52,11 +61,27 @@ class MiniIngredientSearch extends Component {
   }
 
   handleTouchTap(e, menuItem) {
+    this.setState({
+      showPop: false,
+      searchText: '',
+    });
     this.props.onIngredientSelected(menuItem.props.ingredient, menuItem.key);
   }
 
   /**
-   * @param {Object} response  a key-value of the api results
+   * For handling the Popover close
+   */
+  handleRequestClose() {
+    // Only take into account the Popover clickAway when we are
+    // not focusing the TextField.
+    console.log('It\'s closing');
+    this.setState({
+      showPop: false,
+    });
+  }
+
+  /**
+   * @param {Object} response a key-value object of the api results
    *
    * @returns {Array} a list representation of the above to be consumable by map
    */
@@ -75,6 +100,7 @@ class MiniIngredientSearch extends Component {
         <Popover
           open={this.state.showPop}
           anchorEl={this.state.popupAnchorEl}
+          onRequestClose={this.handleRequestClose}
           useLayerForClickAway={false}
           anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
           targetOrigin={{ horizontal: 'left', vertical: 'top' }}
@@ -82,13 +108,18 @@ class MiniIngredientSearch extends Component {
           <Menu
             ref="menu"
             autoWidth={false}
+            style={styles.menu}
             onItemTouchTap={this.handleTouchTap}
           >
             {this.state.searchResults.map(entry =>
               <MenuItem
                 key={entry.key}
+                style={styles.menu}
                 ingredient={entry.value}
-                primaryText={entry.value.name}
+                primaryText={entry.value.isNew ?
+                  `create new ${entry.value.name}`
+                  : entry.value.name}
+                leftIcon={entry.value.isNew ? <PersonAdd /> : null}
               />
             )}
           </Menu>

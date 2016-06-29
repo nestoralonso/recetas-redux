@@ -35,7 +35,6 @@ const ingredients = {
   },
 };
 
-// The single quotes on the keys are because babel doesn't transpile those appropriately
 const recipes = {
   fake_a1: {
     title: 'Bondiola Braseada a la Cerveza!',
@@ -44,20 +43,8 @@ const recipes = {
   },
   fake_a2: {
     title: 'Matambre Arrollado DELICIA TOTAL',
-    description: 'Como hacer un Matambre Arrollado y Asado 100%!' +
-    ' Una combinación que va a explotar los paladares de tus comensales!',
+    description: 'Una combinación que va a explotar los paladares de tus comensales!',
     thumbnailUrl: 'http://img.youtube.com/vi/GeAquSuYfnc/default.jpg',
-  },
-  fake_a3: {
-    title: 'Costillar a Pura Leña Inyectado al Vino Tinto!',
-    description: 'Tremendo ASADO de noche a puro costillar y achuras!' +
-    ' Esta receta te deja el costillar como una manteca! A inyectar se ha dicho!',
-    thumbnailUrl: 'http://img.youtube.com/vi/v3nuujGTYs4/default.jpg',
-  },
-  fake_a4: {
-    title: 'Lomo al Trapo! Directo en las Brasas!',
-    description: 'Técnica para hacer carne 100% al trapo! No saben el sabor que se genera!',
-    thumbnailUrl: 'http://img.youtube.com/vi/lQzKDb8VR78/default.jpg',
   },
 };
 
@@ -111,11 +98,11 @@ export function loginPromise() {
 
 export function addRecipe(recipe) {
   return delay(300).then(() => {
-    const newRecipe = Object.assign({}, recipe, {
-      id: v4(),
-    });
+    const newKey = v4();
+    const newRecipe = Object.assign({}, recipe, { id: newKey });
+    fakeDb.recipes[newKey] = newRecipe;
 
-    fakeDb.recipes.push(newRecipe);
+    console.log('newRecipe=', newRecipe);
     return newRecipe;
   });
 }

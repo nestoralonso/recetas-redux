@@ -1,3 +1,9 @@
+
+# recetas-redux
+
+recetas-redux is an app to search and create recipes but with this twist:  
+All across spanish speaking countries the same ingredient has different name depending on the country, for example the word for 'Bell pepper' in Colombia is 'Pimentón' but in other countries is 'Morrón' or 'Ají Dulce'. *Recetas Redux* is an SPA to deal with this problem, so you tell the app which country you are in and the ingredients get localized for previously filled data by other users.
+
 ## Setup and running 
 To run, just type 
 ```bash
@@ -20,11 +26,6 @@ npm run browser
 ``` 
 This will look for changes in the dist folder and reload
 
-## Description
-
-recetas-redux is an app to search and create recipes but with the following twist:  
-All across spanish speaking countries the ingredients for recipes have different names, for example the word for 'Bell pepper' in Colombia is Pimentón but in other countries is 'Morrón' or 'Ají Dulce'. *Recetas Redux* is an SPA to deal with this problem, so you tell the app which country you are in and the ingredients get translated automatically for previously filled data by other users.
-
 ## About the tecnology stack
 Some of the tech used and the motivation to use it are listed here:
 
@@ -39,14 +40,20 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 ## TODOS
 - [x] Put some material-ui goodness
 - [x] Add redux-thunk to deal with the asynchronous data
-- [ ] Put a firebase backend
+- [x] Put a firebase backend
+- [x] Put some webpack on it, pending: doesn't make hot reloading always
+- [ ] Check the unit selection for ingQ, doesn't change
+- [ ] Test [react-transform-boilerplate](https://github.com/gaearon/react-transform-boilerplate)
+- [ ] Implement a index to search ingredients by words, ex: ```{'panceta': '0xavad', 'tocineta': '0xavad'}```
+- [ ] Implement logout
+- [ ] Implement redirect for login
 - [ ] Implement the add ingredient functionality
-- [ ] Search functionality
+- [ ] Search recipe functionality
 - [ ] Add some responsive styling
 - [ ] Update the data model to deal with the ingredients
 - [ ] Test Firebase hosting
 
 ## DREAM TODOS
-- [ ] Implement it as PWA (Progressive Web App)
+- [ ] Implement it as a PWA (Progressive Web App)
 - [ ] Given an ingredient, search recipes based on it
 - [ ] Add i18n to the strings

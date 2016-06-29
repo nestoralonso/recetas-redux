@@ -125,10 +125,11 @@ class RecipeForm extends Component {
           autoScrollBodyContent
         >
           <div className="recipe-form__title-section">Ingredients</div>
-          {ingredientQuantities.map(x =>
+          {ingredientQuantities.map(ingQ =>
             <IngredientQuantity
-              key={x.key}
-              ingredientName={x.value.ingredient.name}
+              key={ingQ.key}
+              ingredientName={ingQ.value.ingredient.name}
+              isNew={ingQ.value.ingredient.isNew}
             />)}
           <MiniIngredientSearch onIngredientSelected={this.onIngredientSelected} />
           <br />

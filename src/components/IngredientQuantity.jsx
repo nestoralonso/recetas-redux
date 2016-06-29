@@ -44,7 +44,9 @@ class IngredientQuantity extends Component {
   }
 
   render() {
-    const { ingredientName } = this.props;
+    const { ingredientName, isNew } = this.props;
+    const ingredientStyle = isNew ? Object.assign({},
+      styles.ingredientName, { color: 'blue' }) : styles.ingredientName;
     return (
       <div style={styles.component}>
         <TextField
@@ -60,12 +62,12 @@ class IngredientQuantity extends Component {
           {constants.getUnits().map(entry =>
             <MenuItem
               value={entry.key}
-              primaryText={entry.value}
               key={entry.key}
+              primaryText={entry.value}
             />)}
         </SelectField>
 
-        <div style={styles.ingredientName}>{ingredientName}</div>
+        <div style={ingredientStyle}>{ingredientName}</div>
 
         <IconButton
           style={styles.deleteButton}
@@ -80,6 +82,7 @@ class IngredientQuantity extends Component {
 }
 IngredientQuantity.propTypes = {
   ingredientName: PropTypes.string.isRequired,
+  isNew: PropTypes.bool,
 };
 
 export default IngredientQuantity;
