@@ -19,6 +19,7 @@ Spanish (Spain)       es-es
 const ingredients = {
   fake_pim: {
     name: 'pimentón',
+    userId: 'user-1',
     localizations: {
       'es-co': 'pimentón',
       'es-mx': 'ají dulce',
@@ -27,6 +28,7 @@ const ingredients = {
   },
   fake_cil: {
     name: 'cilantro',
+    userId: 'user-1',
     localizations: {
       'es-co': 'cilantro',
       'es-pe': 'perejil chino',
@@ -35,6 +37,7 @@ const ingredients = {
   },
   fake_toc: {
     name: 'tocineta',
+    userId: 'user-1',
     localizations: {
       'es-co': 'tocineta',
       'es-pe': 'beicon',
@@ -76,19 +79,24 @@ const fakeDb = {
   'user-recipes': {
     'user-1': recipes,
   },
+  'user-ingredients': {
+    'user-1': ingredients,
+  },
 };
 
 const delay = (ms) =>
   new Promise(resolve => setTimeout(resolve, ms));
 
 export function fetchRecipes(userId) {
-  if (!userId) return {};
+  if (!userId) return Promise.resolve({});
   const userRecipes = fakeDb['user-recipes'][userId];
   return delay(300).then(() => userRecipes || {});
 }
 
 export function fetchIngredients(userId) {
-  return delay(300).then(() => fakeDb.ingredients);
+  if (!userId) return Promise.resolve({});
+  const userIngredients = fakeDb['user-ingredients'][userId];
+  return delay(300).then(() => userIngredients || {});
 }
 
 /**
@@ -116,7 +124,7 @@ export function searchIngredients(name) {
 
 export function loginPromise() {
   return delay(200).then(() => ({
-    userId: 'fake-123',
+    uid: 'user-1',
     displayName: 'Fake User',
     photoURL: 'http://lol.jpg',
     email: 'fake@fake.com',
@@ -129,7 +137,6 @@ export function addRecipe(recipeForm) {
     const newRecipe = utils.convertRecipeToFB(recipeForm);
     newRecipe.id = newKey;
     const newIngs = utils.getNewIngredients(recipeForm);
-    console.log('newIngs=', newIngs);
     fakeDb.recipes[newKey] = newRecipe;
     fakeDb.ingredients = Object.assign({}, ingredients, newIngs);
 

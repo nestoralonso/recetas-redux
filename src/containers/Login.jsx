@@ -27,12 +27,13 @@ class Login extends Component {
     return (
       <Card
         style={{
-          'maxWidth': '800px',
-          'margin': '30px auto',
-          'padding': '50px'
-      }}>
+          maxWidth: '800px',
+          margin: '30px auto',
+          padding: '50px' }}
+      >
         <CardText
-          style={{ 'textAlign': 'center' }}>
+          style={{ textAlign: 'center' }}
+        >
           To start using this app Login
         </CardText>
 
@@ -40,7 +41,8 @@ class Login extends Component {
           style={{ display: 'block' }}
           onClick={this.onClick}
           label="Log in with Google"
-          primary={true}/>
+          primary
+        />
       </Card>
 
     );
@@ -49,7 +51,7 @@ class Login extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClick: () => dispatch(loginProcess())
+    onClick: () => dispatch(loginProcess()),
   };
 }
 export default connect(null, mapDispatchToProps)(Login);

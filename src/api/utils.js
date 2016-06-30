@@ -19,7 +19,7 @@ export function getNewIngredients(recipeForm) {
   for (const entry of recipeForm.ingredientQuantities) {
     const { key, value } = entry;
     if (value.ingredient.isNew) {
-      newIngredients[key] = { name: key };
+      newIngredients[key] = { name: value.ingredient.name };
     }
   }
 

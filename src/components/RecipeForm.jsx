@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 import MiniIngredientSearch from './MiniIngredientSearch.jsx';
 import IngredientQuantity from './IngredientQuantity.jsx';
 import { addRecipe } from '../actions';
-
+import { UNITS } from '../constants';
 
 const BLANK_RECIPE = {
   title: '',
@@ -20,10 +20,11 @@ const BLANK_RECIPE = {
   ingredientQuantities: [{
     key: 'panceta',
     value: {
-      quantity: 1,
-      unit: 'spoons',
+      quantity: '70',
+      unit: UNITS.GRAMS,
       ingredient: { name: 'panceta' },
-    } }],
+    },
+  }],
 };
 
 class RecipeForm extends Component {
@@ -34,13 +35,14 @@ class RecipeForm extends Component {
       recipe: BLANK_RECIPE,
     };
 
-    console.log('ingQua=', this.state.recipe.ingredientQuantities);
-    for (const fName of ['handleOpen', 'handleClose', 'titleChange',
-                      'descriptionChange', 'portionsChange',
-                      'preparationTimeChange', 'cookingTimeChange',
-                      'procedureChange', 'onIngredientSelected']) {
-      this[fName] = this[fName].bind(this);
-    }
+    [this.handleOpen, this.handleClose,
+      this.titleChange, this.onIngQuantityChange,
+      this.handleUnitChange, this.descriptionChange,
+      this.portionsChange, this.preparationTimeChange,
+      this.cookingTimeChange, this.procedureChange,
+      this.onIngredientSelected].forEach(f => {
+        this[f.name] = f.bind(this);
+      });
   }
 
   handleOpen() {
@@ -50,6 +52,38 @@ class RecipeForm extends Component {
   handleClose() {
     this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
     this.setState({ open: false, recipe: BLANK_RECIPE });
+  }
+
+  onIngQuantityChange(key, quantity) {
+    const newState = this.updateIngredientQuant(key, { quantity });
+    this.setState(newState);
+  }
+
+  handleUnitChange(key, unit) {
+    const newState = this.updateIngredientQuant(key, { unit });
+    this.setState(newState);
+  }
+
+  updateIngredientQuant(key, ingQ) {
+    const { recipe } = this.state;
+
+    const newIQs = recipe.ingredientQuantities.map(iq => {
+      if (iq.key === key) {
+        const newIngQ = Object.assign({}, iq.value, ingQ);
+        return {
+          key: iq.key,
+          value: newIngQ,
+        };
+      }
+      return iq;
+    });
+
+    const newRecipe = Object.assign({}, recipe, { ingredientQuantities: newIQs });
+    const newState = {
+      recipe: newRecipe,
+    };
+
+    return newState;
   }
 
   updateStateFromInput(inputEvt, propName) {
@@ -91,8 +125,8 @@ class RecipeForm extends Component {
     const newIngQuant = {
       key,
       value: {
-        quantity: 0,
-        unit: 'ounces',
+        quantity: '10',
+        unit: UNITS.GRAMS,
         ingredient,
       },
     };
@@ -125,10 +159,16 @@ class RecipeForm extends Component {
           autoScrollBodyContent
         >
           <div className="recipe-form__title-section">Ingredients</div>
+
           {ingredientQuantities.map(ingQ =>
             <IngredientQuantity
               key={ingQ.key}
+              ingredientKey={ingQ.key}
               ingredientName={ingQ.value.ingredient.name}
+              onQuantityChange={this.onIngQuantityChange}
+              onUnitChange={this.handleUnitChange}
+              quantity={ingQ.value.quantity}
+              unit={ingQ.value.unit}
               isNew={ingQ.value.ingredient.isNew}
             />)}
           <MiniIngredientSearch onIngredientSelected={this.onIngredientSelected} />

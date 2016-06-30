@@ -4,6 +4,8 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import * as constants from '../constants';
 import IconButton from 'material-ui/IconButton';
+import shallowCompare from 'react-addons-shallow-compare';
+
 
 const styles = {
   component: {
@@ -38,17 +40,20 @@ class IngredientQuantity extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedUnit: constants.DEFAULT_UNIT,
-    };
-
-    this.handleChange = this.handleChange.bind(this);
+    this.handleUnitChange = this.handleUnitChange.bind(this);
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
   }
 
-  handleChange(e, val, payload) {
-    this.setState({
-      selectedUnit: payload,
-    });
+  handleUnitChange(e, val, payload) {
+    if (this.props.onUnitChange) {
+      this.props.onUnitChange(this.props.ingredientKey, payload);
+    }
+  }
+
+  handleQuantityChange(e) {
+    if (this.props.onQuantityChange) {
+      this.props.onQuantityChange(this.props.ingredientKey, e.target.value);
+    }
   }
 
   render() {
@@ -59,13 +64,14 @@ class IngredientQuantity extends Component {
       <div style={styles.component}>
         <TextField
           style={styles.quantity}
-          underlineShow
+          onChange={this.handleQuantityChange}
+          value={this.props.quantity}
           hintText="2"
         />
         <SelectField
           style={styles.unit}
-          value={this.state.selectedUnit}
-          onChange={this.handleChange}
+          value={this.props.unit}
+          onChange={this.handleUnitChange}
         >
           {constants.getUnits().map(entry =>
             <MenuItem
@@ -90,7 +96,12 @@ class IngredientQuantity extends Component {
 }
 IngredientQuantity.propTypes = {
   ingredientName: PropTypes.string.isRequired,
+  ingredientKey: PropTypes.string,
+  quantity: PropTypes.string.isRequired,
+  unit: PropTypes.string.isRequired,
   isNew: PropTypes.bool,
+  onQuantityChange: PropTypes.func,
+  onUnitChange: PropTypes.func,
 };
 
 export default IngredientQuantity;

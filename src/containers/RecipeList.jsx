@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import { List, ListItem } from 'material-ui/List';
@@ -16,11 +17,17 @@ class RecipeList extends Component {
     this.fetchData();
   }
 
+  componentWillMount() {
+    if (!this.props.userId) {
+      browserHistory.push('/login');
+    }
+  }
+
   fetchData() {
     const { fetchRecipes, userId } = this.props;
 
-    // TODO: fix this baked id
-    fetchRecipes('user-1');
+    if (!userId) return;
+    fetchRecipes(userId);
   }
 
   render() {
@@ -35,6 +42,8 @@ class RecipeList extends Component {
 }
 RecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
+  userId: PropTypes.string,
+  fetchRecipes: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -44,5 +53,4 @@ const mapStateToProps = (state) => ({
   userId: state.user.userId,
 });
 
-RecipeList = connect(mapStateToProps, { fetchRecipes: actions.fetchRecipes })(RecipeList);
-export default RecipeList;
+export default connect(mapStateToProps, { fetchRecipes: actions.fetchRecipes })(RecipeList);

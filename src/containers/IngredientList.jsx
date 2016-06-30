@@ -15,7 +15,7 @@ class IngredientList extends Component {
 
   fetchData() {
     const { fetchIngredients, userId } = this.props;
-    fetchIngredients();
+    fetchIngredients(userId);
   }
 
   render() {
@@ -31,6 +31,7 @@ class IngredientList extends Component {
 }
 IngredientList.propTypes = {
   ingredients: PropTypes.object.isRequired,
+  fetchIngredients: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -40,5 +41,7 @@ const mapStateToProps = (state) => ({
   userId: state.user.userId,
 });
 
-IngredientList = connect(mapStateToProps, { fetchIngredients: actions.fetchIngredients })(IngredientList);
-export default IngredientList;
+export default connect(
+  mapStateToProps, {
+    fetchIngredients: actions.fetchIngredients,
+  })(IngredientList);

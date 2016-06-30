@@ -11,13 +11,14 @@ const styles = {
     cursor: 'pointer',
   },
   buttons: {
-    color: 'white'
-  }
+    color: 'white',
+  },
 };
 const MyAppBar = () => (
   <AppBar
     title={<span style={styles.title}>Recetas Redux</span>}
-    iconElementRight={<UserInfo />} />
+    iconElementRight={<UserInfo />}
+  />
 );
 
 export default MyAppBar;
