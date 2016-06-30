@@ -42,22 +42,23 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 - [x] Add redux-thunk to deal with the asynchronous data
 - [x] Put a firebase backend
 - [x] Put some webpack on it, pending: doesn't make hot reloading always
-- [ ] Recipe form validation
-- [ ] Ingredient CRUD
 - [x] Check the unit selection for ingQ, ait this moment it doesn't change
-- [ ] Serialize the ingredient units in IngQua
-- [ ] Implement cancel for create form
+- [x] Serialize the ingredient units in IngQua
+- [x] Make a fake backend for rapid testing
 - [x] Test [react-transform-boilerplate](https://github.com/gaearon/react-transform-boilerplate), the hot loader b3 did the work
 - [ ] Implement a index to search ingredients by words, ex: ```{'panceta': '0xavad', 'tocineta': '0xavad'}```
+- [ ] Ingredient CRUD
+- [ ] Recipe form validation
+- [ ] Implement cancel for create form
 - [ ] Implement logout
-- [ ] Implement redirect for login
-- [ ] Implement the standalone add ingredient functionality
 - [ ] Search recipe functionality
 - [ ] Detail view for recipes with portions calculator
+- [ ] Search recipes by ingredient
 - [ ] Add some responsive styling
 - [ ] Update the data model to deal with the ingredients
 - [ ] Test Firebase hosting
 - [ ] Edit form for recipes
+- [ ] Implement redirect for login
 
 ## DREAM TODOS
 - [ ] Implement it as a PWA (Progressive Web App)
