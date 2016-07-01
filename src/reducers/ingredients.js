@@ -16,6 +16,11 @@ export const byId = (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_INGREDIENTS_SUCCESS':
       return action.response;
+    case 'ADD_INGREDIENT_SUCCESS':
+      return Object.assign(
+        {},
+        state,
+        { [action.id]: action.response });
     default:
       return state;
   }
