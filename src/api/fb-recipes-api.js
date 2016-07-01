@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import * as utils from './utils';
+import * as gu from '../utils';
 
 
 // Initialize Firebase
@@ -14,9 +15,14 @@ firebase.initializeApp(config);
 
 const firebaseDB = firebase.database();
 export function fetchRecipes(userId) {
+  console.log('fetchRecipes(userId= ', userId);
   return firebaseDB.ref(`user-recipes/${userId}`)
     .once('value')
-    .then(snap => snap.val());
+    .then(snap => {
+      console.log('val=', snap.val());
+      return snap.val();
+    })
+    .then(resp => resp.recipes);
 }
 
 export function fetchIngredients(userId) {
@@ -36,17 +42,79 @@ export function addRecipe(recipeForm, userId) {
 
   // Now collect the new created ingredients
   const newIngs = utils.getNewIngredients(recipeForm);
-  for (const ing of newIngs) {
+  for (const ingKey of Object.keys(newIngs)) {
+    const ing = newIngs[ingKey];
     const newKey = firebaseDB.ref().child('ingredients').push().key;
     updates[`/ingredients/${newKey}`] = ing;
     updates[`/user-ingredients/${userId}/${newKey}`] = ing;
   }
 
   const res = firebaseDB.ref().update(updates);
-  res.then(x => console.log(x));
+  res
+    .then(_ => console.log('new rp success'))
+    .catch(err => Promise.reject(err));
   return Promise.resolve(newRecipe);
 }
 
+export function collectIngsByIds(dict) {
+  const allIngs = {};
+  const allProm = [];
+  for (const entry of gu.objectToTuples(dict)) {
+    const otherKeys = entry.value;
+    for (const entryKey of gu.objectToTuples(otherKeys)) {
+      const ingKey = entryKey.key;
+      const ingPromise = firebaseDB.ref(`ingredients/${ingKey}`).once('value');
+      allIngs[ingKey] = ingPromise;
+      allProm.push(ingPromise);
+    }
+  }
+
+  return Promise.all(allProm).then(() => {
+    for (const entryIng of gu.objectToTuples(allIngs)) {
+      entryIng.value.then(i => {
+        const val = i.val();
+        if (val) {
+          allIngs[entryIng.key] = val;
+        }
+        else {
+          delete allIngs[entryIng.key];
+        }
+      });
+    }
+
+    return allIngs;
+  });
+}
+
+export function searchIngredients(name) {
+  const ref = firebaseDB.ref('ing-by-word');
+  console.log('firebaseDB=', firebaseDB);
+  console.log('ref=', ref);
+  const queryRef = ref.orderByKey()
+    .startAt(name).limitToFirst(5);
+  const queryResult = queryRef.once('value').then(res => res.val());
+  return queryResult.then(idsIndex => collectIngsByIds(idsIndex));
+}
+
+export function addIngredient(ingredientForm, userId) {
+  const newKey = firebaseDB.ref().child('ingredients').push().key;
+  const updates = {};
+  updates[`/ingredients/${newKey}`] = ingredientForm;
+  updates[`/user-ingredients/${userId}/${newKey}`] = ingredientForm;
+
+  for (const loc of Object.keys(ingredientForm.localizations)) {
+    const word = ingredientForm.localizations[loc];
+    if (!word) continue;
+    updates[`/ing-by-word/${word}/${newKey}`] = true;
+  }
+
+  // Also add the original name to the mix
+  updates[`/ing-by-word/${ingredientForm.name}/${newKey}`] = true;
+
+  const result = firebaseDB.ref().update(updates);
+  ingredientForm.id = newKey;
+  return result.then(_ => ingredientForm);
+}
 export function loginPromise() {
   const provider = new firebase.auth.GoogleAuthProvider();
   return firebase.auth().signInWithPopup(provider).then((result) => {
