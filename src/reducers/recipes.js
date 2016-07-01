@@ -26,7 +26,7 @@ function allIds(state = [], action) {
   }
 }
 
-export function getAllRecipes(state) {
+export function getMyRecipes(state) {
   return state.allIds.map(id => Object.assign({}, state.byId[id], { id }));
 }
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { List, ListItem } from 'material-ui/List';
 
 import RecipeItem from '../components/RecipeItem.jsx';
-import { getAllRecipes } from '../reducers/recipes';
+import { getMyRecipes } from '../reducers/recipes';
 import * as actions from '../actions';
 
 
@@ -47,7 +47,7 @@ MyRecipeList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  recipes: getAllRecipes(state.recipes),
+  recipes: getMyRecipes(state.recipes),
   isFetching: state.recipes.isFetching,
   error: state.recipes.errorMessage,
   userId: state.user.userId,
