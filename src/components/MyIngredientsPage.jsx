@@ -1,10 +1,10 @@
 import React from 'react';
-import IngredientList from '../containers/MyIngredientList.jsx';
+import MyIngredientList from '../containers/MyIngredientList.jsx';
 import IngredientForm from './IngredientForm.jsx';
 
 const IngredientsPage = () => (
   <div>
-    <IngredientList />
+    <MyIngredientList />
     <IngredientForm />
   </div>
 );

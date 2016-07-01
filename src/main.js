@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import AppShell from './components/AppShell.jsx';
-import RecipesPage from './components/RecipesPage.jsx';
-import IngredientsPage from './components/IngredientsPage.jsx';
+import RecipesPage from './components/MyRecipesPage.jsx';
+import IngredientsPage from './components/MyIngredientsPage.jsx';
 import Login from './containers/Login.jsx';
 import About from './components/About.jsx';
 import configureStore from './store/configureStore';

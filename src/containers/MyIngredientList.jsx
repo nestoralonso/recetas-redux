@@ -8,7 +8,7 @@ import IngredientItem from '../components/IngredientItem.jsx';
 import * as actions from '../actions';
 
 
-class IngredientList extends Component {
+class MyIngredientList extends Component {
   constructor(props) {
     super(props);
     this.fetchData();
@@ -38,7 +38,7 @@ class IngredientList extends Component {
       </List>);
   }
 }
-IngredientList.propTypes = {
+MyIngredientList.propTypes = {
   ingredients: PropTypes.object.isRequired,
   fetchIngredients: PropTypes.func.isRequired,
   userId: PropTypes.string,
@@ -54,4 +54,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps, {
     fetchIngredients: actions.fetchIngredients,
-  })(IngredientList);
+  })(MyIngredientList);

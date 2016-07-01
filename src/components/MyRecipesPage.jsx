@@ -3,7 +3,7 @@ import MyRecipeList from '../containers/MyRecipeList.jsx';
 import RecipeForm from './RecipeForm.jsx';
 
 
-const RecipesPage = () => (
+const MyRecipesPage = () => (
   <div>
     <MyRecipeList />
     <RecipeForm />
@@ -11,4 +11,4 @@ const RecipesPage = () => (
 );
 
 
-export default RecipesPage;
+export default MyRecipesPage;

@@ -9,7 +9,7 @@ import { getAllRecipes } from '../reducers/recipes';
 import * as actions from '../actions';
 
 
-class RecipeList extends Component {
+class MyRecipeList extends Component {
   constructor(props) {
     super(props);
 
@@ -40,7 +40,7 @@ class RecipeList extends Component {
       </List>);
   }
 }
-RecipeList.propTypes = {
+MyRecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
   userId: PropTypes.string,
   fetchRecipes: PropTypes.func.isRequired,
@@ -56,4 +56,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps, {
     fetchRecipes: actions.fetchRecipes,
-  })(RecipeList);
+  })(MyRecipeList);
