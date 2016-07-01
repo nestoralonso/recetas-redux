@@ -1,5 +1,5 @@
 import React from 'react';
-import IngredientList from '../containers/IngredientList.jsx';
+import IngredientList from '../containers/MyIngredientList.jsx';
 import IngredientForm from './IngredientForm.jsx';
 
 const IngredientsPage = () => (
