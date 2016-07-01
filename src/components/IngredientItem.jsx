@@ -4,7 +4,7 @@ const IngredientItem = ({ ingredient }) => {
   return (
     <div className="ingredient-item">
       <div className="ingredient-item__thumbnail">
-        <img 
+        <img
           src={ingredient.thumbnailUrl}
           width="120"
           height="90"

@@ -36,16 +36,16 @@ class IngredientForm extends Component {
     });
   }
 
+  getLocValue(locId) {
+    const { localizations } = this.state;
+    return localizations[locId] ? localizations[locId] : '';
+  }
+
   locChange(e, locId) {
     const { localizations } = this.state;
     const text = e.target.value;
     const newLocs = Object.assign({}, localizations, { [locId]: text });
     this.setState({ localizations: newLocs });
-  }
-
-  getLocValue(locId) {
-    const { localizations } = this.state;
-    return localizations[locId] ? localizations[locId] : '';
   }
 
   nameChange(e) {

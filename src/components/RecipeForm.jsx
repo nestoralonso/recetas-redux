@@ -45,10 +45,6 @@ class RecipeForm extends Component {
       });
   }
 
-  handleOpen() {
-    this.setState({ open: true });
-  }
-
   handleClose() {
     this.setState({ open: false, recipe: BLANK_RECIPE });
   }
@@ -137,6 +133,10 @@ class RecipeForm extends Component {
     this.setState({
       recipe: Object.assign({}, recipe, { ingredientQuantities: [...ingQuants, newIngQuant] }),
     });
+  }
+
+  handleOpen() {
+    this.setState({ open: true });
   }
 
   render() {

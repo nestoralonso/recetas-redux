@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
 

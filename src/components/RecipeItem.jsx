@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
-class Recipe extends Component {
+class RecipeItem extends Component {
   render() {
     const { title, description, thumbnailUrl } = this.props.recipe;
     return (
       <div className="recipe-item">
         <div className="recipe-item__thumbnail">
-          <img src={thumbnailUrl} width="120" height="90"/>
+          <img src={thumbnailUrl} width="120" height="90" alt="recipe" />
         </div>
         <div className="recipe-item__block">
           <div className="recipe-item__title">
@@ -21,5 +21,7 @@ class Recipe extends Component {
     );
   }
 }
-
-export default Recipe;
+RecipeItem.propTypes = {
+  recipe: PropTypes.object.isRequired,
+};
+export default RecipeItem;
