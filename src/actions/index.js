@@ -1,4 +1,3 @@
-import { v4 } from 'node-uuid';
 import * as api from '../api';
 
 /**
@@ -73,7 +72,15 @@ export const addRecipe = (recipe, uid) => (dispatch) => {
   }));
 };
 
-export const loginProcess = () => (dispatch, getState) => {
+export const addIngredient = (ingredientForm, uid) => (dispatch) => {
+  return api.addIngredient(ingredientForm, uid).then(response => dispatch({
+    type: 'ADD_INGREDIENT_SUCCESS',
+    id: response.id,
+    response,
+  }));
+};
+
+export const loginProcess = () => (dispatch) => {
   return api.loginPromise().then(
     user => {
       console.log('user', user);

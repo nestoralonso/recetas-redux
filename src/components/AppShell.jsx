@@ -19,8 +19,6 @@ class AppShell extends Component {
           <MyAppBar />
           <Toolbar />
           {children}
-
-          <RecipeForm />
         </Paper>
       </MuiThemeProvider>
     );

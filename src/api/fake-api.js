@@ -103,6 +103,8 @@ export function fetchIngredients(userId) {
  * Search the ingredients db by name
  *
  * @param {String} name the ingredient name
+ *
+ * @returns {Object} containing the matching ingredients
  */
 export function searchIngredients(name) {
   console.log('searchIngredients', name, fakeDb.ingredients);
@@ -131,15 +133,33 @@ export function loginPromise() {
   }));
 }
 
-export function addRecipe(recipeForm) {
+export function addRecipe(recipeForm, userId) {
   return delay(300).then(() => {
     const newKey = v4();
     const newRecipe = utils.convertRecipeToFB(recipeForm);
     newRecipe.id = newKey;
+    newRecipe.userId = userId;
     const newIngs = utils.getNewIngredients(recipeForm);
     fakeDb.recipes[newKey] = newRecipe;
     fakeDb.ingredients = Object.assign({}, ingredients, newIngs);
 
     return newRecipe;
+  });
+}
+
+
+export function addIngredient(ingredientForm, userId) {
+  return delay(300).then(() => {
+    const newKey = v4();
+    const newIngredient = {
+      name: ingredientForm.name,
+      localizations: ingredientForm.localizations,
+      userId,
+    };
+
+    fakeDb.ingredients[newKey] = newIngredient;
+    fakeDb['user-ingredients'][newKey] = newIngredient;
+
+    return newIngredient;
   });
 }

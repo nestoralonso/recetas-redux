@@ -227,6 +227,7 @@ class RecipeForm extends Component {
 
 RecipeForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  userId: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

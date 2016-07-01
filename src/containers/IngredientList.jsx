@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 import { List, ListItem } from 'material-ui/List';
 
@@ -13,14 +14,22 @@ class IngredientList extends Component {
     this.fetchData();
   }
 
+
+  componentWillMount() {
+    if (!this.props.userId) {
+      browserHistory.push('/login');
+    }
+  }
+
   fetchData() {
     const { fetchIngredients, userId } = this.props;
+    if (!userId) return;
     fetchIngredients(userId);
   }
 
   render() {
     const { ingredients } = this.props;
-    console.log('render ings=', ingredients);
+    if (!ingredients) return <List>nothing here</List>;
     return (
       <List>
         {Object.keys(ingredients).map(key => <ListItem key={key}>
@@ -32,6 +41,7 @@ class IngredientList extends Component {
 IngredientList.propTypes = {
   ingredients: PropTypes.object.isRequired,
   fetchIngredients: PropTypes.func.isRequired,
+  userId: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
