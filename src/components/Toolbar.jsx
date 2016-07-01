@@ -9,7 +9,7 @@ const styles = {
   },
 };
 const MyToolbar = () => (
-  <Toolbar>
+  <Toolbar role="navigation">
     <ToolbarGroup firstChild float="left">
       <RaisedButton style={styles.button} containerElement={<Link to="/recipes" />} label="Recipes" />
       <RaisedButton style={styles.button} containerElement={<Link to="/ingredients" />} label="Ingredients" />

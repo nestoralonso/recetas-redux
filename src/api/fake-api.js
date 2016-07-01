@@ -128,7 +128,7 @@ export function loginPromise() {
   return delay(200).then(() => ({
     uid: 'user-1',
     displayName: 'Fake User',
-    photoURL: 'http://lol.jpg',
+    photoURL: 'https://lh3.googleusercontent.com/-8QUkI8GGx6A/AAAAAAAAAAI/AAAAAAAAACo/RP6YMhfXNyk/s96-c/photo.jpg',
     email: 'fake@fake.com',
   }));
 }

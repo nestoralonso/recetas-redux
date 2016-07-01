@@ -40,7 +40,7 @@ class RecipeForm extends Component {
       this.handleUnitChange, this.descriptionChange,
       this.portionsChange, this.preparationTimeChange,
       this.cookingTimeChange, this.procedureChange,
-      this.onIngredientSelected].forEach(f => {
+      this.onIngredientSelected, this.handleSave].forEach(f => {
         this[f.name] = f.bind(this);
       });
   }
@@ -50,6 +50,10 @@ class RecipeForm extends Component {
   }
 
   handleClose() {
+    this.setState({ open: false, recipe: BLANK_RECIPE });
+  }
+
+  handleSave() {
     this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
     this.setState({ open: false, recipe: BLANK_RECIPE });
   }
@@ -141,7 +145,7 @@ class RecipeForm extends Component {
         label="Ok"
         primary
         keyboardFocused
-        onTouchTap={this.handleClose}
+        onTouchTap={this.handleSave}
       />,
     ];
 

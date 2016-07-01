@@ -59,3 +59,23 @@ html {
 .ing-quantity__name {
   display: inline-block;
 }
+
+.user-info {
+  position: relative;
+}
+.user-info__display-name {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 1em;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1;
+  color: white;
+}
+
+.user-info__avatar {
+  display: inline-block;
+  vertical-align: center;
+}

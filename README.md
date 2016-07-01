@@ -46,16 +46,17 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 - [x] Serialize the ingredient units in IngQua
 - [x] Make a fake backend for rapid testing
 - [x] Test [react-transform-boilerplate](https://github.com/gaearon/react-transform-boilerplate), the hot loader b3 did the work
-- [ ] Implement a index to search ingredients by words, ex: ```{'panceta': '0xavad', 'tocineta': '0xavad'}```
+- [x] Implement a fb index to search ingredients by words, ex: ```{'panceta': '0xavad', 'tocineta': '0xavad'}```
+- [x] split by word and normalize word before putting them in the index
+- [x] Update the data model to deal with the ingredients
+- [x] Implement cancel for create form
 - [ ] Ingredient CRUD
 - [ ] Recipe form validation
-- [ ] Implement cancel for create form
 - [ ] Implement logout
 - [ ] Search recipe functionality
 - [ ] Detail view for recipes with portions calculator
 - [ ] Search recipes by ingredient
 - [ ] Add some responsive styling
-- [ ] Update the data model to deal with the ingredients
 - [ ] Test Firebase hosting
 - [ ] Edit form for recipes
 - [ ] Implement redirect for login

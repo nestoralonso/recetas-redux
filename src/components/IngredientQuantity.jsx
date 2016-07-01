@@ -68,6 +68,7 @@ class IngredientQuantity extends Component {
           value={this.props.quantity}
           hintText="2"
         />
+        {" "}
         <SelectField
           style={styles.unit}
           value={this.props.unit}
