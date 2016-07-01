@@ -40,7 +40,6 @@ class MiniIngredientSearch extends Component {
     searchIngredients(searchText).then(res => {
       const apiIngredients = this.resultsAsList(res);
 
-      // TODO: add a fake item to pass the option of create a new ingredient
       apiIngredients.push({
         key: `key-${searchText}`,
         value: {

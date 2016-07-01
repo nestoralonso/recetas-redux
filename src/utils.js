@@ -16,7 +16,7 @@ export function tuplesToObject(tuples) {
 
 
 /**
- * @param {Object} an object of the form {abc: 3, cdf: 5}
+ * @param {Object} obj an object of the form {abc: 3, cdf: 5}
  * @returns {Array} [{key: 'abc', value: 3}, {key: 'cdf', value: 5}]
  */
 export function objectToTuples(obj) {
