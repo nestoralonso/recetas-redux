@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { loginProcess } from '../actions'
+import { loginProcess } from '../actions';
 
 import {
   Card,
@@ -59,7 +59,10 @@ class Login extends Component {
     );
   }
 }
-
+Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  onClick: PropTypes.func,
+};
 const mapStateToProps = (state) => ({
   user: state.user,
 });
