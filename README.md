@@ -50,7 +50,13 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 - [x] split by word and normalize word before putting them in the index
 - [x] Update the data model to deal with the ingredients
 - [x] Implement cancel for create form
-- [ ] Ingredient CRUD
+- [ ] Delete ingQuant
+- [ ] Country selector implement, for anonymous users too
+- [ ] Search Recipe Page 
+- [ ] Explain better why is getting those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
+- [ ] Complete ingredient CRUD
+- [ ] Complete recipe CRUD
+- [ ] Checkout material-ui with sass
 - [ ] Recipe form validation
 - [ ] Implement logout
 - [ ] Search recipe functionality

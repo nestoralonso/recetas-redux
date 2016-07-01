@@ -79,3 +79,9 @@ html {
   display: inline-block;
   vertical-align: center;
 }
+
+@media (max-width: 34em) {
+  .recipe-form {
+    width: 95%;
+  }
+ }

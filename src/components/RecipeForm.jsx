@@ -160,6 +160,7 @@ class RecipeForm extends Component {
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
+          className="recipe-form"
           autoScrollBodyContent
         >
           <div className="recipe-form__title-section">Ingredients</div>

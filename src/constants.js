@@ -26,3 +26,19 @@ export const DEFAULT_UNIT = 'GRAMS';
 export const getUnits = () =>
   Object.keys(UNITS)
     .map(key => ({ key, value: unitLabel(key) }));
+
+const LOCALE_NAMES = {
+  'es-ar': 'Argentina',
+  'es-cl': 'Chile',
+  'es-co': 'Colombia',
+  'es-gt': 'Guatemala',
+  'es-mx': 'Mexico',
+  'es-pe': 'Peru',
+  'es-pr': 'Puerto Rico',
+  'es-ve': 'Venezuela',
+  'es-es': 'Spain',
+};
+
+export function getLocaleName(loc) {
+  return LOCALE_NAMES[loc] || 'waat';
+}

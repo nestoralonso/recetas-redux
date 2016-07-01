@@ -75,8 +75,7 @@ export function collectIngsByIds(dict) {
         const val = i.val();
         if (val) {
           allIngs[entryIng.key] = val;
-        }
-        else {
+        } else { // the else is here because the linter tell me to
           delete allIngs[entryIng.key];
         }
       });
@@ -91,7 +90,7 @@ export function searchIngredients(name) {
   console.log('firebaseDB=', firebaseDB);
   console.log('ref=', ref);
   const queryRef = ref.orderByKey()
-    .startAt(name).limitToFirst(5);
+    .startAt(name).endAt(name + 'z').limitToFirst(2);
   const queryResult = queryRef.once('value').then(res => res.val());
   return queryResult.then(idsIndex => collectIngsByIds(idsIndex));
 }
