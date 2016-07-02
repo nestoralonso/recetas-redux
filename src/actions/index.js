@@ -32,6 +32,57 @@ export const fetchRecipes = (userId) => (dispatch, getState) => {
   });
 };
 
+export const fetchRecent = () => (dispatch, getState) => {
+  if (getState().searchResults.isFetching) {
+    return Promise.resolve();
+  }
+
+  dispatch({
+    type: 'SEARCH_RECIPES_REQUEST',
+  });
+
+  return api.recentRecipes().then(response => {
+    dispatch({
+      type: 'SEARCH_RECIPES_SUCCESS',
+      response,
+    });
+
+    return response;
+  },
+  error => {
+    dispatch({
+      type: 'SEARCH_RECIPES_FAILURE',
+      message: error.message || 'Error fetching recipes',
+    });
+  });
+};
+
+export const searchRecipes = (query) => (dispatch, getState) => {
+  if (getState().searchResults.isFetching) {
+    return Promise.resolve();
+  }
+
+  dispatch({
+    type: 'SEARCH_RECIPES_REQUEST',
+    query,
+  });
+
+  return api.searchRecipes(query).then(response => {
+    dispatch({
+      type: 'SEARCH_RECIPES_SUCCESS',
+      response,
+    });
+
+    return response;
+  },
+  error => {
+    dispatch({
+      type: 'SEARCH_RECIPES_FAILURE',
+      message: error.message || 'Error fetching recipes',
+    });
+  });
+};
+
 export const fetchIngredients = (userId) => (dispatch, getState) => {
   if (getState().ingredients.isFetching) {
     return Promise.resolve();

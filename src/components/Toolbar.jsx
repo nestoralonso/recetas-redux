@@ -11,10 +11,26 @@ const styles = {
 const MyToolbar = () => (
   <Toolbar role="navigation">
     <ToolbarGroup firstChild float="left">
-      <RaisedButton style={styles.button} containerElement={<Link to="/recipes" />} label="My Recipes" />
-      <RaisedButton style={styles.button} containerElement={<Link to="/ingredients" />} label="My Ingredients" />
-      <RaisedButton style={styles.button} containerElement={<Link to="/Login" />} label="Login" />
-      <RaisedButton style={styles.button} containerElement={<Link to="/About" />} label="About" />
+      <RaisedButton
+        style={styles.button}
+        containerElement={<Link to="/search" />}
+        label="RecipesHub"
+      />
+      <RaisedButton
+        style={styles.button}
+        containerElement={<Link to="/recipes" />}
+        label="My Recipes"
+      />
+      <RaisedButton
+        style={styles.button}
+        containerElement={<Link to="/ingredients" />}
+        label="My Ingredients"
+      />
+      <RaisedButton
+        style={styles.button}
+        containerElement={<Link to="/Login" />}
+        label="Login"
+      />
     </ToolbarGroup>
   </Toolbar>
 );

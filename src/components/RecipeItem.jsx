@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+
 class RecipeItem extends Component {
   render() {
     const { title, description, thumbnailUrl } = this.props.recipe;
@@ -12,7 +13,6 @@ class RecipeItem extends Component {
           <div className="recipe-item__title">
             {title}
           </div>
-
           <div className="recipe-item__description">
             {description}
           </div>

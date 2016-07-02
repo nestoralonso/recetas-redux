@@ -87,12 +87,30 @@ export function collectIngsByIds(dict) {
 
 export function searchIngredients(name) {
   const ref = firebaseDB.ref('ing-by-word');
-  console.log('firebaseDB=', firebaseDB);
   console.log('ref=', ref);
   const queryRef = ref.orderByKey()
-    .startAt(name).endAt(name + 'z').limitToFirst(2);
+    .startAt(name).endAt(name + 'z')
+    .limitToFirst(2);
   const queryResult = queryRef.once('value').then(res => res.val());
   return queryResult.then(idsIndex => collectIngsByIds(idsIndex));
+}
+
+export function searchRecipes(name) {
+  const ref = firebaseDB.ref('recipes');
+  console.log('ref=', ref);
+  const queryRef = ref.orderByChild('title')
+    .startAt(name).endAt(name + 'z')
+    .limitToFirst(5);
+  const queryResult = queryRef.once('value').then(res => res.val());
+  return queryResult;
+}
+
+export function recentRecipes() {
+  return firebaseDB
+    .ref('recipes')
+    .limitToLast(10)
+    .once('value')
+    .then(res => res.val());
 }
 
 export function addIngredient(ingredientForm, userId) {

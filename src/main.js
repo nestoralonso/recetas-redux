@@ -12,7 +12,7 @@ import Login from './containers/Login.jsx';
 import About from './components/About.jsx';
 import configureStore from './store/configureStore';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import RecipesHub from './containers/RecipesHub.jsx';
 
 const store = configureStore();
 console.log('store=', store);
@@ -22,6 +22,7 @@ const Root = ({ store }) => (
     <Router history={browserHistory}>
       <Route path="/" component={AppShell} >
         <IndexRoute component={Login} />
+        <Route path="/search" component={RecipesHub} />
         <Route path="/recipes" component={RecipesPage} />
         <Route path="/ingredients" component={IngredientsPage} />
         <Route path="/login" component={Login} />

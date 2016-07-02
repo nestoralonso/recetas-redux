@@ -5,32 +5,25 @@ import { connect } from 'react-redux';
 import { List, ListItem } from 'material-ui/List';
 
 import RecipeItem from '../components/RecipeItem.jsx';
-import { getMyRecipes } from '../reducers/recipes';
+import { getRecipes } from '../reducers/searchResults';
 import * as actions from '../actions';
 import LinearProgress from 'material-ui/LinearProgress';
 
 
-class MyRecipeList extends Component {
+class RecentRecipes extends Component {
   constructor(props) {
     super(props);
     this.fetchData();
-  }
-
-  componentWillMount() {
-    if (!this.props.userId) {
-      browserHistory.push('/login');
-    }
-  }
-
-  fetchData() {
-    const { fetchRecipes, userId } = this.props;
-
-    if (!userId) return;
-    fetchRecipes(userId);
+    console.log('hello=');
   }
 
   onRecipeSelected(e, recipeId) {
     console.log(recipeId);
+  }
+
+  fetchData() {
+    const { fetchRecipes } = this.props;
+    fetchRecipes();
   }
 
   render() {
@@ -54,7 +47,7 @@ class MyRecipeList extends Component {
       );
   }
 }
-MyRecipeList.propTypes = {
+RecentRecipes.propTypes = {
   recipes: PropTypes.array.isRequired,
   userId: PropTypes.string,
   fetchRecipes: PropTypes.func.isRequired,
@@ -62,7 +55,7 @@ MyRecipeList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  recipes: getMyRecipes(state.recipes),
+  recipes: getRecipes(state.searchResults),
   isFetching: state.recipes.isFetching,
   error: state.recipes.errorMessage,
   userId: state.user.userId,
@@ -70,5 +63,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, {
-    fetchRecipes: actions.fetchRecipes,
-  })(MyRecipeList);
+    fetchRecipes: actions.fetchRecent,
+  })(RecentRecipes);
