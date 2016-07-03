@@ -42,6 +42,13 @@ class RecipeDetail extends Component {
     );
   }
 
+/*
+  title: '',
+  description: '',
+  portions: '',
+  preparationTime: '',
+  cookingTime: '',
+  procedure: '', */
   render() {
     let content;
     const { recipe, ingredients } = this.state;
@@ -56,14 +63,20 @@ class RecipeDetail extends Component {
             {recipe.title}
           </div>
           <div>{locale}</div>
-          <div className="recipe_detail_iq__title">Ingredient List</div>
-          <ul className="recipe_detail_iq__list">
+          <div className="recipe_detail__iq-title">Ingredient List</div>
+          <div className="recipe_detail__portions">{recipe.portions}</div>
+          <ul className="recipe_detail__iq-list">
             {gu.objectToTuples(recipe.ingredientQuantities).map(entry => {
               const { key, value: iq } = entry;
               const ingredient = ingredients[key];
               return <li key={key}> {this.renderIngQuant(iq, ingredient, locale)} </li>;
             })}
           </ul>
+
+          <div className="recipe_detail__description">{recipe.description}</div>
+          <div className="recipe_detail__preparation-time">{recipe.preparationTime}</div>
+          <div className="recipe_detail__cooking-time">{recipe.cookingTime}</div>
+          <div className="recipe_detail__procedure">{recipe.procedure}</div>
         </div>
       );
     }

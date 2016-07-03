@@ -134,7 +134,6 @@ class RecipeForm extends Component {
     const { recipe } = this.state;
     const newIQs = recipe.ingredientQuantities.filter(iq => iq.key !== key);
 
-    console.log('after=', newIQs);
     const newRecipe = Object.assign({}, recipe, { ingredientQuantities: newIQs });
     this.setState({ recipe: newRecipe });
   }

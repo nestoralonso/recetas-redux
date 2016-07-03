@@ -21,8 +21,7 @@ export function fetchRecipes(userId) {
     .then(snap => {
       console.log('val=', snap.val());
       return snap.val();
-    })
-    .then(resp => resp.recipes);
+    });
 }
 
 export function fetchIngredients(userId) {
