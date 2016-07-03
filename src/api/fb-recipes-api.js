@@ -37,8 +37,8 @@ export function addRecipe(recipeForm, userId) {
   newRecipe.id = recipeId;
 
   const updates = {};
-  updates[`/recipes/${recipeId}`] = recipeForm;
-  updates[`/user-recipes/${userId}/${recipeId}`] = recipeForm;
+  updates[`/recipes/${recipeId}`] = newRecipe;
+  updates[`/user-recipes/${userId}/${recipeId}`] = newRecipe;
 
   // Now collect the new created ingredients
   const newIngs = utils.getNewIngredients(recipeForm);
@@ -104,6 +104,38 @@ export function searchRecipes(name) {
   const queryResult = queryRef.once('value').then(res => res.val());
   return queryResult;
 }
+
+export function fetchIngredientsByKey(ingredientsMap) {
+  const ingredientsRef = firebaseDB.ref('ingredients');
+  if (!ingredientsMap) {
+    return Promise.resolve({});
+  }
+  const promiseMap = Object.keys(ingredientsMap)
+    .map(key => ({
+      key,
+      val: ingredientsRef.child(key)
+      .once('value').then(i => i.val()) })).reduce((acum, x) => {
+        acum[x.key] = x.val;
+        return acum;
+      }, {});
+
+  return gu.waitForAllKeys(promiseMap);
+}
+
+/**
+ * @param {String} recipeId
+ * @returns {Promise<Object>} a promise that contains an object
+ * with keys for the recipe and the ingredients
+ */
+export function fetchRecipeWithDetails(recipeId) {
+  const ref = firebaseDB.ref(`recipes/${recipeId}`);
+  const recipePromise = ref.once('value').then(r => r.val());
+  return recipePromise.then(recipe => gu.waitForAllKeys({
+    recipe: Promise.resolve(recipe),
+    ingredients: fetchIngredientsByKey(recipe.ingredientQuantities),
+  }));
+}
+
 
 export function recentRecipes() {
   return firebaseDB
