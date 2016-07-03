@@ -40,29 +40,18 @@ class RecipeForm extends Component {
       this.handleUnitChange, this.descriptionChange,
       this.portionsChange, this.preparationTimeChange,
       this.cookingTimeChange, this.procedureChange,
-      this.onIngredientSelected, this.handleSave].forEach(f => {
+      this.onIngredientSelected, this.handleSave,
+      this.handleIngQuantDelete].forEach(f => {
         this[f.name] = f.bind(this);
       });
   }
 
-  handleClose() {
-    this.setState({ open: false, recipe: BLANK_RECIPE });
-  }
-
-  handleSave() {
-    this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
-    this.setState({ open: false, recipe: BLANK_RECIPE });
-  }
 
   onIngQuantityChange(key, quantity) {
     const newState = this.updateIngredientQuant(key, { quantity });
     this.setState(newState);
   }
 
-  handleUnitChange(key, unit) {
-    const newState = this.updateIngredientQuant(key, { unit });
-    this.setState(newState);
-  }
 
   updateIngredientQuant(key, ingQ) {
     const { recipe } = this.state;
@@ -135,6 +124,30 @@ class RecipeForm extends Component {
     });
   }
 
+
+  handleUnitChange(key, unit) {
+    const newState = this.updateIngredientQuant(key, { unit });
+    this.setState(newState);
+  }
+
+  handleIngQuantDelete(key) {
+    const { recipe } = this.state;
+    const newIQs = recipe.ingredientQuantities.filter(iq => iq.key !== key);
+
+    console.log('after=', newIQs);
+    const newRecipe = Object.assign({}, recipe, { ingredientQuantities: newIQs });
+    this.setState({ recipe: newRecipe });
+  }
+
+  handleSave() {
+    this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
+    this.setState({ open: false, recipe: BLANK_RECIPE });
+  }
+
+  handleClose() {
+    this.setState({ open: false, recipe: BLANK_RECIPE });
+  }
+
   handleOpen() {
     this.setState({ open: true });
   }
@@ -172,6 +185,7 @@ class RecipeForm extends Component {
               ingredientName={ingQ.value.ingredient.name}
               onQuantityChange={this.onIngQuantityChange}
               onUnitChange={this.handleUnitChange}
+              onDelete={this.handleIngQuantDelete}
               quantity={ingQ.value.quantity}
               unit={ingQ.value.unit}
               isNew={ingQ.value.ingredient.isNew}

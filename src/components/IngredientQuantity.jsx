@@ -42,6 +42,7 @@ class IngredientQuantity extends Component {
 
     this.handleUnitChange = this.handleUnitChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleUnitChange(e, val, payload) {
@@ -53,6 +54,12 @@ class IngredientQuantity extends Component {
   handleQuantityChange(e) {
     if (this.props.onQuantityChange) {
       this.props.onQuantityChange(this.props.ingredientKey, e.target.value);
+    }
+  }
+
+  handleDelete() {
+    if (this.props.onDelete) {
+      this.props.onDelete(this.props.ingredientKey);
     }
   }
 
@@ -87,6 +94,7 @@ class IngredientQuantity extends Component {
         <IconButton
           style={styles.deleteButton}
           tooltip="Remove"
+          onTouchTap={this.handleDelete}
         >
           <i className="material-icons">delete</i>
         </IconButton>
@@ -103,6 +111,7 @@ IngredientQuantity.propTypes = {
   isNew: PropTypes.bool,
   onQuantityChange: PropTypes.func,
   onUnitChange: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 export default IngredientQuantity;

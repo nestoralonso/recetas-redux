@@ -147,6 +147,14 @@ export function recentRecipes() {
 
 export function addIngredient(ingredientForm, userId) {
   const newKey = firebaseDB.ref().child('ingredients').push().key;
+
+// delete non-empty localizations
+  for (const loc of Object.keys(ingredientForm.localizations)) {
+    const word = ingredientForm.localizations[loc];
+    if (!word) {
+      delete ingredientForm[loc];
+    }
+  }
   const updates = {};
   updates[`/ingredients/${newKey}`] = ingredientForm;
   updates[`/user-ingredients/${userId}/${newKey}`] = ingredientForm;
