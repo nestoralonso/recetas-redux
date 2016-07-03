@@ -52,6 +52,22 @@ class RecipeForm extends Component {
     this.setState(newState);
   }
 
+  onIngredientSelected(ingredient, key) {
+    console.log('onIngredientSelected=', ingredient, key);
+    const { recipe } = this.state;
+    const ingQuants = recipe.ingredientQuantities;
+    const newIngQuant = {
+      key,
+      value: {
+        quantity: '10',
+        unit: UNITS.GRAMS,
+        ingredient,
+      },
+    };
+    this.setState({
+      recipe: Object.assign({}, recipe, { ingredientQuantities: [...ingQuants, newIngQuant] }),
+    });
+  }
 
   updateIngredientQuant(key, ingQ) {
     const { recipe } = this.state;
@@ -105,23 +121,6 @@ class RecipeForm extends Component {
 
   procedureChange(e) {
     this.updateStateFromInput(e, 'procedure');
-  }
-
-  onIngredientSelected(ingredient, key) {
-    console.log('onIngredientSelected=', ingredient, key);
-    const { recipe } = this.state;
-    const ingQuants = recipe.ingredientQuantities;
-    const newIngQuant = {
-      key,
-      value: {
-        quantity: '10',
-        unit: UNITS.GRAMS,
-        ingredient,
-      },
-    };
-    this.setState({
-      recipe: Object.assign({}, recipe, { ingredientQuantities: [...ingQuants, newIngQuant] }),
-    });
   }
 
 
