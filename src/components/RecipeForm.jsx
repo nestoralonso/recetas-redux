@@ -13,10 +13,12 @@ import { UNITS } from '../constants';
 const BLANK_RECIPE = {
   title: '',
   description: '',
-  portions: '',
+  portions: '1',
   preparationTime: '',
   cookingTime: '',
   procedure: '',
+  thumbnailUrl: 'http://img.youtube.com/vi/U-NHx6a27_8/default.jpg',
+  photoUrl: 'http://img.youtube.com/vi/U-NHx6a27_8/maxresdefault.jpg',
   ingredientQuantities: [],
 };
 
@@ -34,6 +36,7 @@ class RecipeForm extends Component {
       this.handleUnitChange, this.descriptionChange,
       this.portionsChange, this.preparationTimeChange,
       this.cookingTimeChange, this.procedureChange,
+      this.thumbnailUrlChange, this.photoUrlChange,
       this.onIngredientSelected, this.handleSave,
       this.handleIngQuantDelete].forEach(f => {
         this[f.name] = f.bind(this);
@@ -95,6 +98,14 @@ class RecipeForm extends Component {
 
   titleChange(e) {
     this.updateStateFromInput(e, 'title');
+  }
+
+  thumbnailUrlChange(e) {
+    this.updateStateFromInput(e, 'thumbnailUrlChange');
+  }
+
+  photoUrlChange(e) {
+    this.updateStateFromInput(e, 'photoUrlChange');
   }
 
   descriptionChange(e) {
@@ -181,7 +192,20 @@ class RecipeForm extends Component {
             errorText={this.state.titleError}
           />
           <br />
-
+          <TextField
+            hintText="http://blbla.com/img.jpg"
+            floatingLabelText="Thumbnail url"
+            onChange={this.thumbnailUrlChange}
+            value={this.state.recipe.thumbnailUrl}
+          />
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <TextField
+            hintText="http://blbla.com/img.jpg"
+            floatingLabelText="Photo url"
+            onChange={this.photoUrlChange}
+            value={this.state.recipe.photoUrl}
+          />
+          <br />
           <div className="recipe-form__title-section">Ingredients</div>
           {ingredientQuantities.map(ingQ =>
             <IngredientQuantity

@@ -4,6 +4,7 @@ todos.txt
 *.log
 testeo/
 bower_components/
+deploy/
 typings
 tmp
 .DS_Store
