@@ -57,7 +57,9 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 - [x] Recipe form validation
 - [x] Add some responsive styling
 - [x] Test Firebase hosting
-- [ ] Implement redirect for login
+- [x] Implement redirect for login
+- [ ] Make a production bundle
+- [ ] Make the recipes hub use the REST api 
 - [ ] Explain better why is getting those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
 - [ ] Complete ingredient CRUD
 - [ ] Complete recipe CRUD

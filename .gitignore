@@ -2,6 +2,7 @@
 node_modules
 todos.txt
 *.log
+*.swp
 testeo/
 bower_components/
 deploy/

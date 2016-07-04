@@ -131,7 +131,17 @@ export const addIngredient = (ingredientForm, uid) => (dispatch) => {
   }));
 };
 
-export const loginProcess = () => (dispatch) => {
+
+export const loginProcess = () => (dispatch) =>
+  api.loginPromise();
+
+/*
+export const loginRedirectResult = () => (dispatch) => {
+
+};
+*/
+
+export const loginProcessPopup = () => (dispatch) => {
   return api.loginPromise().then(
     user => {
       console.log('user', user);
@@ -143,6 +153,7 @@ export const loginProcess = () => (dispatch) => {
           photoURL: user.photoURL,
           email: user.email,
         },
-      }); }
+      });
+    }
   );
 };
