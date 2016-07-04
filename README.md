@@ -52,18 +52,18 @@ It follows the spirit of *Flux* but technically don't implement it. Redux is a p
 - [x] Implement cancel for create form
 - [x] Country selector implement, for anonymous users too
 - [x] Search Recipe Page 
-- [ ] Detail view for recipes with portions calculator
-- [ ] Delete ingQuant
+- [x] Detail view for recipes with portions calculator
+- [x] Delete ingQuant
+- [x] Recipe form validation
+- [x] Add some responsive styling
+- [x] Test Firebase hosting
+- [ ] Implement redirect for login
 - [ ] Explain better why is getting those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
 - [ ] Complete ingredient CRUD
 - [ ] Complete recipe CRUD
-- [ ] Recipe form validation
 - [ ] Implement logout
 - [ ] Search recipes by ingredient
-- [ ] Add some responsive styling
-- [ ] Test Firebase hosting
 - [ ] Edit form for recipes
-- [ ] Implement redirect for login
 - [ ] Checkout material-ui with sass
 
 ## DREAM TODOS
