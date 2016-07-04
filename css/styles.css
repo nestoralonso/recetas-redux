@@ -108,7 +108,6 @@ recd stands for recipe-detail
 }
 
 .recd__summary__title {
-  color: darkred;
   font-size: 1.375rem;
   text-align: center;
   margin-top: 1em;
@@ -133,8 +132,19 @@ recd stands for recipe-detail
   margin: 0 auto;
 }
 
-.recd__iq {
+.recd__portions i {
+  vertical-align: top;
+}
+.recd__portions__text {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5em;
+  margin-top: 0.3rem;
+  line-height: 1;
+}
 
+.recd__portions__input {
+  width: 2em;
 }
 
 .recd__iq__title {
@@ -157,16 +167,10 @@ recd stands for recipe-detail
   margin-top: 0.6rem;
 }
 
-.recd__preparation-time i {
-  vertical-align: middle;
-}
-
-.recd__cooking-time i {
-  vertical-align: middle;
-}
-
+.recd__preparation-time i,
+.recd__cooking-time i,
 .recd__total-time i {
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .recd__preparation-time__text,
@@ -176,7 +180,7 @@ recd stands for recipe-detail
   display: inline-block;
   vertical-align: middle;
   margin-left: 0.5em;
-  margin-top: 0.5em;
+  margin-top: 0.3rem;
   line-height: 1;
 }
 

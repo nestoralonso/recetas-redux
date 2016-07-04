@@ -11,13 +11,13 @@ import { fetchRecipeWithDetails } from '../api';
 class RecipeDetail extends Component {
   constructor(props) {
     super(props);
-    console.log('constructor=', this.props.params.recipeId);
     this.state = {
       recipe: null,
       ingredients: [],
     };
 
     this.renderIngQuant = this.renderIngQuant.bind(this);
+    this.handlePortionsChange = this.handlePortionsChange.bind(this);
   }
 
   componentWillMount() {
@@ -27,14 +27,24 @@ class RecipeDetail extends Component {
       this.setState({
         recipe,
         ingredients,
+        portions: recipe.portions,
       });
     });
   }
 
-  renderIngQuant(iq, ingredient, locale) {
+  handlePortionsChange(e) {
+    const portions = parseInt(e.target.value, 10);
+    this.setState({ portions });
+  }
+  renderIngQuant(iq, ingredient, locale, origPortions, portions) {
+    let quantity = iq.quantity;
+    if (origPortions !== portions) {
+      const factor = portions / origPortions;
+      quantity = quantity * factor;
+    }
     return (
       <div>
-        {iq.quantity} {consts.unitLabel(iq.unit)} of
+        {quantity} {consts.unitLabel(iq.unit)} of
         {' '}{ingredient ?
           gu.localizedIngName(ingredient, locale)
           : 'missing'}
@@ -44,8 +54,8 @@ class RecipeDetail extends Component {
 
   render() {
     let content;
-    const { recipe, ingredients } = this.state;
-    console.log('ingredients=', ingredients);
+    const { recipe, ingredients, portions } = this.state;
+    const origPortions = recipe ? recipe.portions : 1;
     const locale = this.props.currLocale;
     if (!recipe) {
       content = <div><CircularProgress /> </div>;
@@ -66,17 +76,29 @@ class RecipeDetail extends Component {
           </div>
           <div className="recd__iq clearfix">
             <h2 className="recd__iq__title">Ingredient List</h2>
+            <div className="recd__portions">
+              <i className="material-icons">people</i>
+              <div className="recd__portions__text">
+                <input
+                  className="recd__portions__input"
+                  type="number"
+                  onChange={this.handlePortionsChange}
+                  value={portions}
+                />
+                {" "}
+                servings
+              </div>
+            </div>
             <ul className="recd__iq__list">
               {gu.objectToTuples(recipe.ingredientQuantities).map(entry => {
                 const { key, value: iq } = entry;
                 const ingredient = ingredients[key];
-                return <li key={key}> {this.renderIngQuant(iq, ingredient, locale)} </li>;
+                return (
+                  <li key={key}>
+                    {this.renderIngQuant(iq, ingredient, locale, origPortions, portions)}
+                  </li>);
               })}
             </ul>
-          </div>
-          <div className="recd__portions">
-            <i className="material-icons">people</i>
-            {recipe.portions} servings
           </div>
           <h2 className="recd__time__title">
             Time
