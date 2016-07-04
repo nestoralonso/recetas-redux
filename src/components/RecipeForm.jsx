@@ -17,14 +17,7 @@ const BLANK_RECIPE = {
   preparationTime: '',
   cookingTime: '',
   procedure: '',
-  ingredientQuantities: [{
-    key: 'panceta',
-    value: {
-      quantity: '70',
-      unit: UNITS.GRAMS,
-      ingredient: { name: 'panceta' },
-    },
-  }],
+  ingredientQuantities: [],
 };
 
 class RecipeForm extends Component {

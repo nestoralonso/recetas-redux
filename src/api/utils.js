@@ -2,6 +2,9 @@ import { tuplesToObject } from '../utils';
 
 export function convertRecipeToFB(recipeForm) {
   const newRecipe = Object.assign({}, recipeForm);
+  newRecipe.portions = parseFloat(newRecipe.portions);
+  newRecipe.cookingTime = parseFloat(newRecipe.cookingTime);
+  newRecipe.preparationTime = parseFloat(newRecipe.preparationTime);
   if (newRecipe.ingredientQuantities) {
     newRecipe.ingredientQuantities = tuplesToObject(newRecipe.ingredientQuantities);
   }

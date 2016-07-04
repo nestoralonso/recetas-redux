@@ -1,3 +1,17 @@
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
 html {
   font-family: 'Roboto', sans-serif;
 }
@@ -26,6 +40,7 @@ html {
   font-weight: 500;
   margin-top: 1em;
   font-size: 1.2em;
+  padding: 0.3em;
 }
 
 .recipe-item__description {
@@ -80,8 +95,107 @@ html {
   vertical-align: center;
 }
 
-@media (max-width: 34em) {
-  .recipe-form {
-    width: 95%;
+/*
+recd stands for recipe-detail
+*/
+.recd {
+  padding: 0.4rem;
+}
+
+.recd__summary__text-block {
+  width: 100%;
+  overflow: hidden;
+}
+
+.recd__summary__title {
+  color: darkred;
+  font-size: 1.375rem;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 28px;
+}
+.recd__summary__description {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 28px;
+}
+
+.recd__summary__main-photo {
+  width: 100%;
+  vertical-align: top;
+}
+
+.recd__summary__img {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.recd__iq {
+
+}
+
+.recd__iq__title {
+  padding: 0.3em;
+}
+
+.recd__time__title {
+  padding: 0.3em;
+}
+
+.recd__preparation-time {
+  margin-top: 0.6rem;
+}
+
+.recd__cooking-time {
+  margin-top: 0.6rem;
+}
+
+.recd__total-time {
+  margin-top: 0.6rem;
+}
+
+.recd__preparation-time i {
+  vertical-align: middle;
+}
+
+.recd__cooking-time i {
+  vertical-align: middle;
+}
+
+.recd__total-time i {
+  vertical-align: middle;
+}
+
+.recd__preparation-time__text,
+.recd__cooking-time__text,
+.recd__total-time__text
+{
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  line-height: 1;
+}
+
+.recd__procedure__title {
+  padding: 0.3em;
+}
+
+@media (min-width: 1024px) {
+  .recd__summary__text-block {
+    width: 40%;
+    margin-top: 0;
+    margin-bottom: 0;
   }
- }
+
+  .recd__summary__main-photo {
+    float: right;
+    width: 60%;
+  }
+  .recd {
+    padding: 0.8rem;
+  }
+}

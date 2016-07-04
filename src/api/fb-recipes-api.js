@@ -19,7 +19,6 @@ export function fetchRecipes(userId) {
   return firebaseDB.ref(`user-recipes/${userId}`)
     .once('value')
     .then(snap => {
-      console.log('val=', snap.val());
       return snap.val();
     });
 }

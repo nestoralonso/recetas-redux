@@ -15,6 +15,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import RecipesHub from './containers/RecipesHub.jsx';
 import RecipeDetail from './containers/RecipeDetail.jsx';
 
+// when using webpack
+require('../css/styles.css');
 
 const store = configureStore();
 console.log('store=', store);
