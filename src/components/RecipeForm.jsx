@@ -26,6 +26,7 @@ class RecipeForm extends Component {
     this.state = {
       open: false,
       recipe: BLANK_RECIPE,
+      titleError: '',
     };
 
     [this.handleOpen, this.handleClose,
@@ -131,6 +132,11 @@ class RecipeForm extends Component {
   }
 
   handleSave() {
+    if (!this.state.recipe.title) {
+      this.setState({ titleError: 'The title is required' });
+      return;
+    }
+
     this.props.dispatch(addRecipe(this.state.recipe, this.props.userId));
     this.setState({ open: false, recipe: BLANK_RECIPE });
   }
@@ -167,8 +173,16 @@ class RecipeForm extends Component {
           className="recipe-form"
           autoScrollBodyContent
         >
-          <div className="recipe-form__title-section">Ingredients</div>
+          <TextField
+            hintText="Fried pork"
+            floatingLabelText="Title"
+            onChange={this.titleChange}
+            value={this.state.recipe.title}
+            errorText={this.state.titleError}
+          />
+          <br />
 
+          <div className="recipe-form__title-section">Ingredients</div>
           {ingredientQuantities.map(ingQ =>
             <IngredientQuantity
               key={ingQ.key}
@@ -182,13 +196,6 @@ class RecipeForm extends Component {
               isNew={ingQ.value.ingredient.isNew}
             />)}
           <MiniIngredientSearch onIngredientSelected={this.onIngredientSelected} />
-          <br />
-          <TextField
-            hintText="Fried pork"
-            floatingLabelText="Title"
-            onChange={this.titleChange}
-            value={this.state.recipe.title}
-          />
           <br />
           <TextField
             hintText="This recipe will change the way you see the world"
