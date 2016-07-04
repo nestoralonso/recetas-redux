@@ -181,7 +181,7 @@ class RecipeForm extends Component {
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
-          className="recipe-form"
+          contentClassName="recipe-form"
           autoScrollBodyContent
         >
           <TextField

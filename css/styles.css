@@ -51,8 +51,11 @@ html {
   font-size: 1.2em;
 }
 
-.ingredient-item {
-
+/*
+  To override the material-ui inline styles
+*/
+.recipe-form {
+  width: 98% !important;
 }
 
 .ingredient-item__thumbnail {
@@ -201,5 +204,10 @@ recd stands for recipe-detail
   }
   .recd {
     padding: 0.8rem;
+  }
+
+
+  .recipe-form {
+    width: 75% !important;
   }
 }

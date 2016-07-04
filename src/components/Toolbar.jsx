@@ -1,5 +1,6 @@
 import React from 'react';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
 
@@ -9,8 +10,7 @@ const styles = {
   },
 };
 const MyToolbar = () => (
-  <Toolbar role="navigation">
-    <ToolbarGroup firstChild float="left">
+  <Paper>
       <RaisedButton
         style={styles.button}
         containerElement={<Link to="/search" />}
@@ -31,8 +31,7 @@ const MyToolbar = () => (
         containerElement={<Link to="/Login" />}
         label="Login"
       />
-    </ToolbarGroup>
-  </Toolbar>
+  </Paper>
 );
 
 
