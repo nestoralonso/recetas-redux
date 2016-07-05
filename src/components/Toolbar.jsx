@@ -10,27 +10,27 @@ const styles = {
   },
 };
 const MyToolbar = () => (
-  <Paper>
-      <RaisedButton
-        style={styles.button}
-        containerElement={<Link to="/search" />}
-        label="RecipesHub"
-      />
-      <RaisedButton
-        style={styles.button}
-        containerElement={<Link to="/recipes" />}
-        label="My Recipes"
-      />
-      <RaisedButton
-        style={styles.button}
-        containerElement={<Link to="/ingredients" />}
-        label="My Ingredients"
-      />
-      <RaisedButton
-        style={styles.button}
-        containerElement={<Link to="/Login" />}
-        label="Login"
-      />
+  <Paper role="navigation">
+    <RaisedButton
+      style={styles.button}
+      containerElement={<Link to="/search" />}
+      label="RecipesHub"
+    />
+    <RaisedButton
+      style={styles.button}
+      containerElement={<Link to="/recipes" />}
+      label="My Recipes"
+    />
+    <RaisedButton
+      style={styles.button}
+      containerElement={<Link to="/ingredients" />}
+      label="My Ingredients"
+    />
+    <RaisedButton
+      style={styles.button}
+      containerElement={<Link to="/Login" />}
+      label="Login"
+    />
   </Paper>
 );
 
