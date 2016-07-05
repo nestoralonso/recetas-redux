@@ -34,8 +34,19 @@ Some of the tech used and the motivation to use it are listed here:
 - Its based on components (not to be confused with web components), this motivates you to write reusable components that are shared in various screens of your app. 
 - It encourages unidirectional flow of data and stateless components. In this way there is only one source of truth in your app and all the relevant components read it from there. One challenge of this approach is that if one little component want to change the state of a parent component it must communicate its intention though event callbacks all the way up, to deal with this issue Facebook created a companion architecture called *Flux* that put a central bureaucrat called the *Store* in charge of modifying the state of the app, so all the components that want to update the state have to pass an *Action* to it and then the *Store* will update its self and notify its subscribers. 
 
+### Firebase
+Firebase is great for a couple of things:
+- A nice object dB
+- Has 'real-time' capabilities 
+- Provides free hosting
+- Has an implementation for authentication using multiple providers
+What is not so great:
+- The types of queries you can make are vastly limited, forget about 'LIKE', 'AND' and 'OR', maybe this is because of its 'real-time' nature.
+- There are no views or complex queries that can run on the server, this can be alleviated if you write some server code that collects the complex views and passes the result to the US client.
+
 ### Redux
-It follows the spirit of *Flux* but technically don't implement it. Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently and are easy to test, also provides a great developer experience, such as live code editing combined with a time traveling debugger. See [Hot Reloading with Time Travel](https://www.youtube.com/watch?v=xsSnOQynTHs)
+It follows the spirit of *Flux* but technically don't implement it. Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently and are easy to test, also provides a great developer experience, such as live code editing combined with a time traveling debugger. See [Hot Reloading with Time Travel](https://www.youtube.com/watch?v=xsSnOQynTHs).
+Redux creates a new state like this: oldState + action = newState
 
 ## TODOS
 - [x] Put some material-ui goodness
