@@ -4,6 +4,10 @@
 recetas-redux is an app to search and create recipes but with this twist:  
 All across spanish speaking countries the same ingredient has different name depending on the country, for example the word for 'Bell pepper' in Colombia is 'Pimentón' but in other countries is 'Morrón' or 'Ají Dulce'. *Recetas Redux* is an SPA to deal with this problem, so you tell the app which country you are in and the ingredients get localized for previously filled data by other users.
 
+## Run from the web
+The project is deployed on firebase, just type
+https://recetas-redux.firebaseapp.com
+
 ## Setup and running 
 To run, just type 
 ```bash
@@ -15,8 +19,7 @@ To install the dependencies
 ```bash
 npm install
 ``` 
-To watch for changes and rebuild, this also starts the liveserver in the port 8080
-
+To watch for changes and rebuild using browserify and babelify, this also starts the liveserver in the port 8080
 ```bash
 npm run start
 ``` 
@@ -76,9 +79,10 @@ Redux creates a new state like this: oldState + action = newState
 - [x] Add some responsive styling
 - [x] Test Firebase hosting
 - [x] Implement redirect for login
+- [ ] Normalize ingredients name when saving, ie, remove tildes and lowercase
 - [ ] Make a production bundle
 - [ ] Make the recipes hub use the REST api 
-- [ ] Explain better why is getting those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
+- [ ] Fix the ingredient search UI a little, by making more clear why is showing those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
 - [ ] Complete ingredient CRUD
 - [ ] Complete recipe CRUD
 - [ ] Implement logout
