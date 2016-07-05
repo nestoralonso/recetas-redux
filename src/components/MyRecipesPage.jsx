@@ -1,12 +1,12 @@
 import React from 'react';
 import MyRecipeList from '../containers/MyRecipeList.jsx';
-import RecipeForm from './RecipeForm.jsx';
+import NewRecipeButton from './NewRecipeButton.jsx';
 
 
 const MyRecipesPage = () => (
   <div>
     <MyRecipeList />
-    <RecipeForm />
+    <NewRecipeButton />
   </div>
 );
 
