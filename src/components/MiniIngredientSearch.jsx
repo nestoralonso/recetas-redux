@@ -30,7 +30,8 @@ class MiniIngredientSearch extends Component {
     });
   }
 
-  onSearchPressed() {
+  onSearchPressed(e) {
+    e.preventDefault();
     this.setState({
       showPop: true,
       popupAnchorEl: ReactDOM.findDOMNode(this.refs.searchTF),
@@ -73,7 +74,6 @@ class MiniIngredientSearch extends Component {
   handleRequestClose() {
     // Only take into account the Popover clickAway when we are
     // not focusing the TextField.
-    console.log('It\'s closing');
     this.setState({
       showPop: false,
     });

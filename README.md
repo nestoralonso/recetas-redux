@@ -11,20 +11,22 @@ http-server
 ``` 
 Or your favorite server
 
-To build from the sources
+To install the dependencies
 ```bash
 npm install
-npm run build:dev
 ``` 
-To watch for changes and rebuild
+To watch for changes and rebuild, this also starts the liveserver in the port 8080
+
 ```bash
 npm run start
 ``` 
-And start the autoreloading browser:
+liveserver will watch for changes in the dist/ folder
+
+## Run using webpack
+All the project should run fine using webpack, but the main method 
 ```bash
-npm run browser
-``` 
-This will look for changes in the dist folder and reload
+npm run startwp
+```
 
 ## About the tecnology stack
 Some of the tech used and the motivation to use it are listed here:
@@ -36,7 +38,7 @@ Some of the tech used and the motivation to use it are listed here:
 
 ### Firebase
 Firebase is great for a couple of things:
-- A nice object dB
+- A nice object DB
 - Has 'real-time' capabilities 
 - Provides free hosting
 - Has an implementation for authentication using multiple providers
@@ -47,6 +49,11 @@ What is not so great:
 ### Redux
 It follows the spirit of *Flux* but technically don't implement it. Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently and are easy to test, also provides a great developer experience, such as live code editing combined with a time traveling debugger. See [Hot Reloading with Time Travel](https://www.youtube.com/watch?v=xsSnOQynTHs).
 Redux creates a new state like this: oldState + action = newState
+
+### CSS using BEM
+ BEM stands for Block, Element, Modifier, it is a methodology for naming css classes. The block is the parent element for example, ```recipe-form```, an element is child of the block for example ```recipe-form__title```, finally the modifier can style an element without clonflicting with other classes, for example ```recipe-form__title--red```. For more info look at [BEM 101](https://css-tricks.com/bem-101/)
+
+
 
 ## TODOS
 - [x] Put some material-ui goodness

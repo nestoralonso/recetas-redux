@@ -6,6 +6,7 @@
     "build:dev": "browserify src/main.js -d --extension=.jsx -t [ babelify --sourceMapsAbsolute --presets [ react es2015 ] ] -o dist/bundle.js",
     "build:wprod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "start": "npm run build:dev && npm-run-all --parallel watch browser",
+    "startwp": "node devServer.js",
     "watch": "onchange src -- npm run build:dev",
     "lint-fix": "eslint --fix src/",
     "browser": "live-server --entry-file='index.html' --watch=dist/ --wait=100  --no-browser",
