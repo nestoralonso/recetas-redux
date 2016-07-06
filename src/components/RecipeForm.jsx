@@ -86,7 +86,7 @@ class RecipeForm extends Component {
       key,
       value: {
         quantity: '10',
-        unit: UNITS.GRAMS,
+        unit: UNITS.GRAM,
         ingredient,
       },
     };
@@ -156,9 +156,21 @@ class RecipeForm extends Component {
     this.setState({ ingredientQuantities: newIQs });
   }
 
+
+  getIngFromIQ(key) {
+    for (const iq of this.state.ingredientQuantities) {
+      if (iq.key === key) {
+        return iq.ingredient;
+      }
+    }
+
+    return null;
+  }
+
   ingredientName(ingKey, locale) {
     console.log('ingredientName cache', this.state.ingCache);
     console.log('key=', ingKey);
+
     if (this.state.ingCache[ingKey]) {
       return this.state.ingCache[ingKey].name;
     }
@@ -237,7 +249,7 @@ class RecipeForm extends Component {
           <IngredientQuantity
             key={ingQ.key}
             ingredientKey={ingQ.key}
-            ingredientName={this.ingredientName(ingQ.key)}
+            ingredientName={ingQ.value.ingredient ? ingQ.value.ingredient.name : this.ingredientName(ingQ.key)}
             onQuantityChange={this.onIngQuantityChange}
             onUnitChange={this.handleUnitChange}
             onDelete={this.handleIngQuantDelete}
