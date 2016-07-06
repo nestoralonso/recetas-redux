@@ -15,8 +15,15 @@ firebase.initializeApp(config);
 
 const firebaseDB = firebase.database();
 export function fetchRecipes(userId) {
-  console.log('fetchRecipes(userId= ', userId);
   return firebaseDB.ref(`user-recipes/${userId}`)
+    .once('value')
+    .then(snap => {
+      return snap.val();
+    });
+}
+
+export function fetchIngredients(userId) {
+  return firebaseDB.ref(`user-ingredients/${userId}`)
     .once('value')
     .then(snap => {
       return snap.val();
@@ -109,13 +116,6 @@ export function collectIngsByIds(dict) {
   });
 }
 
-/**
- * returns {Object} object that contains the hidrated yeys
- */
-export function fetchIngredientsByIds(ids) {
-  gu.waitForAllKeys()
-}
-
 export function searchIngredients(name) {
   const ref = firebaseDB.ref('ing-by-word');
   console.log('ref=', ref);
@@ -179,11 +179,11 @@ export function recentRecipes() {
 export function addIngredient(ingredientForm, userId) {
   const newKey = firebaseDB.ref().child('ingredients').push().key;
 
-// delete non-empty localizations
+  // delete empty localizations
   for (const loc of Object.keys(ingredientForm.localizations)) {
     const word = ingredientForm.localizations[loc];
     if (!word) {
-      delete ingredientForm[loc];
+      delete ingredientForm.localizations[loc];
     }
   }
   const updates = {};

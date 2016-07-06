@@ -19,8 +19,8 @@ const BLANK_RECIPE = {
   preparationTime: '',
   cookingTime: '',
   procedure: '',
-  thumbnailUrl: '',
-  photoUrl: '',
+  thumbnailUrl: 'https://img.youtube.com/vi/U-NHx6a27_8/default.jpg',
+  photoUrl: 'https://img.youtube.com/vi/U-NHx6a27_8/maxresdefault.jpg',
   ingredientQuantities: [],
 };
 
@@ -154,17 +154,6 @@ class RecipeForm extends Component {
   handleIngQuantDelete(key) {
     const newIQs = this.state.ingredientQuantities.filter(iq => iq.key !== key);
     this.setState({ ingredientQuantities: newIQs });
-  }
-
-
-  getIngFromIQ(key) {
-    for (const iq of this.state.ingredientQuantities) {
-      if (iq.key === key) {
-        return iq.ingredient;
-      }
-    }
-
-    return null;
   }
 
   ingredientName(ingKey, locale) {
