@@ -9,6 +9,8 @@ import IngredientQuantity from './IngredientQuantity.jsx';
 import { addRecipe, updateRecipe } from '../actions';
 import { UNITS } from '../constants';
 import * as gu from '../utils';
+import * as api from '../api';
+
 
 const BLANK_RECIPE = {
   title: '',
@@ -27,6 +29,7 @@ class RecipeForm extends Component {
     super(props);
     this.state = Object.assign({
       titleError: '',
+      ingCache: {},
     }, BLANK_RECIPE);
 
     [this.handleOpen, this.handleClose,
@@ -52,8 +55,23 @@ class RecipeForm extends Component {
     } else if (nextProps.recipe) {
       const newState = Object.assign({}, nextProps.recipe);
       const ingQ = newState.ingredientQuantities;
-      newState.ingredientQuantities = gu.objectToTuples(ingQ);
+
+      // convert to strings
+      newState.ingredientQuantities = gu.objectToTuples(ingQ).map(entry => {
+        const { key, value: iq } = entry;
+        iq.quantity = iq.quantity.toString();
+
+        return { key, value: iq };
+      });
       this.setState(newState);
+
+      if (Object.keys(this.state.ingCache).length === 0) {
+        const ingCache = Object.assign({}, ingQ);
+        api.fetchIngredientsByKey(ingCache).then(ings => {
+          this.setState({ ingCache: ings });
+          console.log('state.ingCache=', ings);
+        });
+      }
     }
   }
 
@@ -63,7 +81,6 @@ class RecipeForm extends Component {
   }
 
   onIngredientSelected(ingredient, key) {
-    console.log('onIngredientSelected=', ingredient, key);
     const ingQuants = this.state.ingredientQuantities;
     const newIngQuant = {
       key,
@@ -88,7 +105,6 @@ class RecipeForm extends Component {
       return iq;
     });
 
-    debugger;
     return newIQs;
   }
 
@@ -140,7 +156,13 @@ class RecipeForm extends Component {
     this.setState({ ingredientQuantities: newIQs });
   }
 
-  ingredientName(ingKey) {
+  ingredientName(ingKey, locale) {
+    console.log('ingredientName cache', this.state.ingCache);
+    console.log('key=', ingKey);
+    if (this.state.ingCache[ingKey]) {
+      return this.state.ingCache[ingKey].name;
+    }
+
     return ingKey;
   }
 

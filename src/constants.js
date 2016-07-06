@@ -1,6 +1,6 @@
 export const UNITS = {
   POUND: 'POUND',
-  GRAMS: 'GRAMS',
+  GRAM: 'GRAM',
   CUP: 'CUP',
   SPOON: 'SPOON',
   TABLESPOON: 'TABLESPOON',
@@ -10,7 +10,7 @@ export const UNITS = {
 
 const UNIT_LABELS = {
   POUND: 'pound',
-  GRAMS: 'gram',
+  GRAM: 'gram',
   CUP: 'cup',
   SPOON: 'spoon',
   TABLESPOON: 'tablespoon',
@@ -22,7 +22,7 @@ export function unitLabel(unit) {
   return UNIT_LABELS[unit];
 }
 
-export const DEFAULT_UNIT = 'GRAMS';
+export const DEFAULT_UNIT = 'GRAM';
 export const getUnits = () =>
   Object.keys(UNITS)
     .map(key => ({ key, value: unitLabel(key) }));

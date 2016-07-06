@@ -23,22 +23,13 @@ export function fetchRecipes(userId) {
     });
 }
 
-export function fetchIngredients(userId) {
-  return firebaseDB.ref(`user-ingredients/${userId}`)
-    .once('value')
-    .then(snap => snap.val());
-}
-
 export function addRecipe(recipeForm, userId) {
   const recipeId = firebaseDB.ref().child('recipes').push().key;
   const newRecipe = utils.convertRecipeToFB(recipeForm);
   newRecipe.id = recipeId;
   newRecipe.userId = userId;
 
-  debugger;
   const updates = {};
-  updates[`/recipes/${recipeId}`] = newRecipe;
-  updates[`/user-recipes/${userId}/${recipeId}`] = newRecipe;
 
   // Now collect the new created ingredients
   const newIngs = utils.getNewIngredients(recipeForm);
@@ -48,6 +39,13 @@ export function addRecipe(recipeForm, userId) {
     updates[`/ingredients/${newKey}`] = ing;
     updates[`/user-ingredients/${userId}/${newKey}`] = ing;
   }
+
+  // Get rid of the ingredient object to avoid duplication
+  for (const ingKey of Object.keys(newRecipe.ingredientQuantities)) {
+    delete newRecipe.ingredientQuantities[ingKey].ingredient;
+  }
+  updates[`/recipes/${recipeId}`] = newRecipe;
+  updates[`/user-recipes/${userId}/${recipeId}`] = newRecipe;
 
   const res = firebaseDB.ref().update(updates);
   res
@@ -109,6 +107,13 @@ export function collectIngsByIds(dict) {
 
     return allIngs;
   });
+}
+
+/**
+ * returns {Object} object that contains the hidrated yeys
+ */
+export function fetchIngredientsByIds(ids) {
+  gu.waitForAllKeys()
 }
 
 export function searchIngredients(name) {

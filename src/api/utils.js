@@ -29,9 +29,9 @@ export function convertRecipeToFB(recipeForm) {
 export function getNewIngredients(recipeForm) {
   const newIngredients = {};
   for (const entry of recipeForm.ingredientQuantities) {
-    const { key, value } = entry;
-    if (value.ingredient.isNew) {
-      newIngredients[key] = { name: value.ingredient.name };
+    const { key, value: iq } = entry;
+    if (iq.ingredient && iq.ingredient.isNew) {
+      newIngredients[key] = { name: iq.ingredient.name };
     }
   }
 
