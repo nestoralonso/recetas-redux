@@ -115,13 +115,19 @@ export const fetchIngredients = (userId) => (dispatch, getState) => {
  * This one is a thunk too,
  * returns a promise by convention
  */
-export const addRecipe = (recipe, uid) => (dispatch) => {
-  return api.addRecipe(recipe, uid).then(response => dispatch({
+export const addRecipe = (recipe, userId) => (dispatch) =>
+  api.addRecipe(recipe, userId).then(response => dispatch({
     type: 'ADD_RECIPE_SUCCESS',
     id: response.id,
     response,
   }));
-};
+
+export const updateRecipe = (recipe) => (dispatch) =>
+  api.updateRecipe(recipe).then(response => dispatch({
+    type: 'UPDATE_RECIPE_SUCCESS',
+    id: response.id,
+    response,
+  }));
 
 export const addIngredient = (ingredientForm, uid) => (dispatch) => {
   return api.addIngredient(ingredientForm, uid).then(response => dispatch({

@@ -6,8 +6,9 @@ import TextField from 'material-ui/TextField';
 
 import MiniIngredientSearch from './MiniIngredientSearch.jsx';
 import IngredientQuantity from './IngredientQuantity.jsx';
-import { addRecipe } from '../actions';
+import { addRecipe, updateRecipe } from '../actions';
 import { UNITS } from '../constants';
+import * as gu from '../utils';
 
 const BLANK_RECIPE = {
   title: '',
@@ -35,7 +36,7 @@ class RecipeForm extends Component {
       this.cookingTimeChange, this.procedureChange,
       this.thumbnailUrlChange, this.photoUrlChange,
       this.onIngredientSelected, this.handleSave,
-      this.handleIngQuantDelete].forEach(f => {
+      this.handleIngQuantDelete, this.ingredientName].forEach(f => {
         this[f.name] = f.bind(this);
       });
   }
@@ -44,9 +45,21 @@ class RecipeForm extends Component {
     console.log('state2= ', this.state);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.newRecipe) {
+      const newState = Object.assign({}, BLANK_RECIPE);
+      this.setState(newState);
+    } else if (nextProps.recipe) {
+      const newState = Object.assign({}, nextProps.recipe);
+      const ingQ = newState.ingredientQuantities;
+      newState.ingredientQuantities = gu.objectToTuples(ingQ);
+      this.setState(newState);
+    }
+  }
+
   onIngQuantityChange(key, quantity) {
     const newState = this.updateIngredientQuant(key, { quantity });
-    this.setState(newState);
+    this.setState({ ingredientQuantities: newState });
   }
 
   onIngredientSelected(ingredient, key) {
@@ -63,10 +76,10 @@ class RecipeForm extends Component {
     this.setState({ ingredientQuantities: [...ingQuants, newIngQuant] });
   }
 
-  updateIngredientQuant(key, ingQ) {
+  updateIngredientQuant(key, newIQ) {
     const newIQs = this.state.ingredientQuantities.map(iq => {
       if (iq.key === key) {
-        const newIngQ = Object.assign({}, iq.value, ingQ);
+        const newIngQ = Object.assign({}, iq.value, newIQ);
         return {
           key: iq.key,
           value: newIngQ,
@@ -75,6 +88,7 @@ class RecipeForm extends Component {
       return iq;
     });
 
+    debugger;
     return newIQs;
   }
 
@@ -82,7 +96,6 @@ class RecipeForm extends Component {
     this.setState({
       [propName]: inputEvt.target.value,
     });
-    console.log(this.state);
   }
 
   titleChange(e) {
@@ -127,18 +140,27 @@ class RecipeForm extends Component {
     this.setState({ ingredientQuantities: newIQs });
   }
 
+  ingredientName(ingKey) {
+    return ingKey;
+  }
+
   handleSave() {
     if (!this.state.title) {
       this.setState({ titleError: 'The title is required' });
       return;
     }
 
-    this.props.dispatch(addRecipe(this.state, this.props.userId));
-    this.props.handleClose();
+    if (this.props.newRecipe) {
+      this.props.dispatch(addRecipe(this.state, this.props.userId));
+    } else {
+      this.props.dispatch(updateRecipe(this.state));
+    }
+
+    this.props.onClose();
   }
 
   handleClose() {
-    this.props.handleClose();
+    this.props.onClose();
   }
 
   handleOpen() {
@@ -193,13 +215,13 @@ class RecipeForm extends Component {
           <IngredientQuantity
             key={ingQ.key}
             ingredientKey={ingQ.key}
-            ingredientName={ingQ.value.ingredient.name}
+            ingredientName={this.ingredientName(ingQ.key)}
             onQuantityChange={this.onIngQuantityChange}
             onUnitChange={this.handleUnitChange}
             onDelete={this.handleIngQuantDelete}
             quantity={ingQ.value.quantity}
             unit={ingQ.value.unit}
-            isNew={ingQ.value.ingredient.isNew}
+            isNew={ingQ.value.ingredient ? ingQ.value.ingredient.isNew : false}
           />)}
         <MiniIngredientSearch onIngredientSelected={this.onIngredientSelected} />
         <br />
@@ -234,7 +256,7 @@ class RecipeForm extends Component {
         />
         <br />
         <TextField
-          hintText="Add garlic and cook until onions and garlic are soft, 5 minutes. Add peppers and cook"
+          hintText="Add garlic and cook until the mix is soft, Add peppers and cook 5 min"
           floatingLabelText="Procedure"
           rows={4}
           rowsMax={8}
@@ -248,8 +270,11 @@ class RecipeForm extends Component {
 
 RecipeForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  recipe: PropTypes.object,
+  open: PropTypes.bool.isRequired,
   userId: PropTypes.string,
-  handleClose: PropTypes.func,
+  onClose: PropTypes.func,
+  newRecipe: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

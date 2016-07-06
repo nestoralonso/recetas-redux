@@ -33,6 +33,34 @@ export function addRecipe(recipeForm, userId) {
   const recipeId = firebaseDB.ref().child('recipes').push().key;
   const newRecipe = utils.convertRecipeToFB(recipeForm);
   newRecipe.id = recipeId;
+  newRecipe.userId = userId;
+
+  debugger;
+  const updates = {};
+  updates[`/recipes/${recipeId}`] = newRecipe;
+  updates[`/user-recipes/${userId}/${recipeId}`] = newRecipe;
+
+  // Now collect the new created ingredients
+  const newIngs = utils.getNewIngredients(recipeForm);
+  for (const ingKey of Object.keys(newIngs)) {
+    const ing = newIngs[ingKey];
+    const newKey = firebaseDB.ref().child('ingredients').push().key;
+    updates[`/ingredients/${newKey}`] = ing;
+    updates[`/user-ingredients/${userId}/${newKey}`] = ing;
+  }
+
+  const res = firebaseDB.ref().update(updates);
+  res
+    .then(_ => console.log('new rp success'))
+    .catch(err => Promise.reject(err));
+  return Promise.resolve(newRecipe);
+}
+
+export function updateRecipe(recipeForm) {
+  const recipeId = recipeForm.id;
+  const newRecipe = utils.convertRecipeToFB(recipeForm);
+  newRecipe.id = recipeId;
+  const userId = recipeForm.userId;
 
   const updates = {};
   updates[`/recipes/${recipeId}`] = newRecipe;

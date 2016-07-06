@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { List, ListItem } from 'material-ui/List';
 
 import RecipeItem from '../components/RecipeItem.jsx';
+import RecipeForm from '../components/RecipeForm.jsx';
 import { getMyRecipes } from '../reducers/recipes';
 import * as actions from '../actions';
 import LinearProgress from 'material-ui/LinearProgress';
@@ -14,6 +15,8 @@ class MyRecipeList extends Component {
   constructor(props) {
     super(props);
     this.fetchData();
+    this.state = { recipeEdit: null, openEdit: false };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentWillMount() {
@@ -22,15 +25,19 @@ class MyRecipeList extends Component {
     }
   }
 
+  onRecipeSelected(e, recipeEdit) {
+    this.setState({ recipeEdit, openEdit: true });
+  }
+
+  handleClose() {
+    this.setState({ openEdit: false });
+  }
+
   fetchData() {
     const { fetchRecipes, userId } = this.props;
 
     if (!userId) return;
     fetchRecipes(userId);
-  }
-
-  onRecipeSelected(e, recipeId) {
-    console.log(recipeId);
   }
 
   render() {
@@ -44,12 +51,18 @@ class MyRecipeList extends Component {
             {recipes.map(recipe =>
               <ListItem
                 key={recipe.id}
-                onTouchTap={(e) => this.onRecipeSelected(e, recipe.id)}
+                onTouchTap={(e) => this.onRecipeSelected(e, recipe)}
               >
                 <RecipeItem recipe={recipe} />
               </ListItem>)}
           </List>
         }
+
+        <RecipeForm
+          open={this.state.openEdit}
+          recipe={this.state.recipeEdit}
+          onClose={this.handleClose}
+        />
       </div>
       );
   }

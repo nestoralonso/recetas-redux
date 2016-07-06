@@ -21,7 +21,7 @@ class componentName extends Component {
     return (
       <div>
         <RaisedButton label="New Recipe" onTouchTap={this.handleOpen} />
-        <RecipeForm open={this.state.open} handleClose={this.handleClose} />
+        <RecipeForm open={this.state.open} onClose={this.handleClose} newRecipe />
       </div>
     );
   }
