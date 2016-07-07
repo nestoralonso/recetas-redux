@@ -130,7 +130,7 @@ class RecipeDetail extends Component {
   }
 }
 RecipeDetail.propTypes = {
-  currLocale: PropTypes.string.isRequired,
+  currLocale: PropTypes.string,
 };
 
 function mapStateToProps(state, { params }) {
