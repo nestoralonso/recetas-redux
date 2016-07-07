@@ -3,10 +3,6 @@ import { combineReducers } from 'redux';
 function byId(state = {}, action) {
   switch (action.type) {
     case 'ADD_RECIPE_SUCCESS':
-      return Object.assign(
-        {},
-        state,
-        { [action.id]: action.response });
     case 'UPDATE_RECIPE_SUCCESS':
       return Object.assign(
         {},

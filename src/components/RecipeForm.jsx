@@ -179,6 +179,7 @@ class RecipeForm extends Component {
       this.props.dispatch(updateRecipe(this.state));
     }
 
+    this.setState({ titleError: null });
     this.props.onClose();
   }
 

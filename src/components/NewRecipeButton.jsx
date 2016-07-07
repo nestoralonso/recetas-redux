@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import RecipeForm from './RecipeForm.jsx';
 
-class componentName extends Component {
+class NewRecipeButton extends Component {
   constructor(props) {
     super(props);
     this.handleOpen = this.handleOpen.bind(this);
@@ -27,4 +27,5 @@ class componentName extends Component {
   }
 }
 
-export default componentName;
+
+export default NewRecipeButton;

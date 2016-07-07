@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import * as utils from './utils';
 import * as gu from '../utils';
-
+import removeTildes from './removeTildes';
 
 // Initialize Firebase
 const config = {
@@ -176,31 +176,65 @@ export function recentRecipes() {
     .then(res => res.val());
 }
 
-export function addIngredient(ingredientForm, userId) {
-  const newKey = firebaseDB.ref().child('ingredients').push().key;
+function normalizeWord(word) {
+  if (!word) { return null; }
+  return removeTildes(word.toLocaleLowerCase());
+}
 
-  // delete empty localizations
+function cleanForm(ingredientForm) {
   for (const loc of Object.keys(ingredientForm.localizations)) {
     const word = ingredientForm.localizations[loc];
     if (!word) {
       delete ingredientForm.localizations[loc];
+      continue;
     }
   }
+}
+export function addIngredient(ingredientForm, userId) {
+  const newKey = firebaseDB.ref().child('ingredients').push().key;
+
+  // delete empty localizations
+  cleanForm(ingredientForm);
   const updates = {};
   updates[`/ingredients/${newKey}`] = ingredientForm;
   updates[`/user-ingredients/${userId}/${newKey}`] = ingredientForm;
 
   for (const loc of Object.keys(ingredientForm.localizations)) {
-    const word = ingredientForm.localizations[loc];
-    if (!word) continue;
+    const word = normalizeWord(ingredientForm.localizations[loc]);
+    if (!word) { continue; }
     updates[`/ing-by-word/${word}/${newKey}`] = true;
   }
 
   // Also add the original name to the mix
-  updates[`/ing-by-word/${ingredientForm.name}/${newKey}`] = true;
+  const genericName = normalizeWord(ingredientForm.name);
+  updates[`/ing-by-word/${genericName}/${newKey}`] = true;
 
   const result = firebaseDB.ref().update(updates);
   ingredientForm.id = newKey;
+  return result.then(_ => ingredientForm);
+}
+
+export function updateIngredient(ingredientForm) {
+  const ingKey = ingredientForm.id;
+  const userId = ingredientForm.userId;
+
+  // delete empty localizations
+  cleanForm(ingredientForm);
+  const updates = {};
+  updates[`/ingredients/${ingKey}`] = ingredientForm;
+  updates[`/user-ingredients/${userId}/${ingKey}`] = ingredientForm;
+
+  for (const loc of Object.keys(ingredientForm.localizations)) {
+    const word = normalizeWord(ingredientForm.localizations[loc]);
+    if (!word) { continue; }
+    updates[`/ing-by-word/${word}/${ingKey}`] = true;
+  }
+
+  // Also add the original name to the mix
+  const genericName = normalizeWord(ingredientForm.name);
+  updates[`/ing-by-word/${genericName}/${ingKey}`] = true;
+
+  const result = firebaseDB.ref().update(updates);
   return result.then(_ => ingredientForm);
 }
 

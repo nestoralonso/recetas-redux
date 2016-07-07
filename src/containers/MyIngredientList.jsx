@@ -5,20 +5,27 @@ import { browserHistory } from 'react-router';
 import { List, ListItem } from 'material-ui/List';
 
 import IngredientItem from '../components/IngredientItem.jsx';
+import IngredientForm from '../components/IngredientForm.jsx';
 import * as actions from '../actions';
 
 
 class MyIngredientList extends Component {
   constructor(props) {
     super(props);
+    this.state = { ingredientEdit: null, openEdit: false };
     this.fetchData();
+    this.onIngredientSelected = this.onIngredientSelected.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
-
 
   componentWillMount() {
     if (!this.props.userId) {
       browserHistory.push('/login');
     }
+  }
+
+  onIngredientSelected(e, ingredientEdit) {
+    this.setState({ ingredientEdit, openEdit: true });
   }
 
   fetchData() {
@@ -27,15 +34,32 @@ class MyIngredientList extends Component {
     fetchIngredients(userId);
   }
 
+  handleClose() {
+    this.setState({ openEdit: false });
+  }
+
   render() {
     const { ingredients } = this.props;
     if (!ingredients) return <List>nothing here</List>;
     return (
-      <List>
-        {Object.keys(ingredients).map(key => <ListItem key={key}>
-          <IngredientItem ingredient={ingredients[key]} />
-        </ListItem>)}
-      </List>);
+      <div>
+        <List>
+          {Object.keys(ingredients).map(key =>
+            <ListItem
+              key={key}
+              onTouchTap={(e) => this.onIngredientSelected(e, ingredients[key])}
+            >
+              <IngredientItem ingredient={ingredients[key]} />
+            </ListItem>)}
+        </List>
+
+        <IngredientForm
+          open={this.state.openEdit}
+          ingredient={this.state.ingredientEdit}
+          onClose={this.handleClose}
+        />
+      </div>
+    );
   }
 }
 MyIngredientList.propTypes = {

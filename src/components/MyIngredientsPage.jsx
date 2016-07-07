@@ -1,11 +1,11 @@
 import React from 'react';
 import MyIngredientList from '../containers/MyIngredientList.jsx';
-import IngredientForm from './IngredientForm.jsx';
+import NewIngredientButton from './NewIngredientButton.jsx';
 
 const IngredientsPage = () => (
   <div>
     <MyIngredientList />
-    <IngredientForm />
+    <NewIngredientButton />
   </div>
 );
 

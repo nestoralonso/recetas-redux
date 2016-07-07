@@ -129,6 +129,13 @@ export const updateRecipe = (recipe) => (dispatch) =>
     response,
   }));
 
+export const updateIngredient = (ingredient) => (dispatch) =>
+  api.updateIngredient(ingredient).then(response => dispatch({
+    type: 'UPDATE_INGREDIENT_SUCCESS',
+    id: response.id,
+    response,
+  }));
+
 export const addIngredient = (ingredientForm, uid) => (dispatch) => {
   return api.addIngredient(ingredientForm, uid).then(response => dispatch({
     type: 'ADD_INGREDIENT_SUCCESS',

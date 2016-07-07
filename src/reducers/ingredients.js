@@ -17,6 +17,7 @@ export const byId = (state = {}, action) => {
     case 'FETCH_INGREDIENTS_SUCCESS':
       return action.response;
     case 'ADD_INGREDIENT_SUCCESS':
+    case 'UPDATE_INGREDIENT_SUCCESS':
       return Object.assign(
         {},
         state,
