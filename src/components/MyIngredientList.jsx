@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router';
 
 import { List, ListItem } from 'material-ui/List';
 
-import IngredientItem from '../components/IngredientItem.jsx';
-import IngredientForm from '../components/IngredientForm.jsx';
+import IngredientItem from './IngredientItem.jsx';
+import IngredientForm from './IngredientForm.jsx';
 import * as actions from '../actions';
 
 

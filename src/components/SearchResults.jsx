@@ -5,7 +5,7 @@ import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 
-import RecipeItem from '../components/RecipeItem.jsx';
+import RecipeItem from './RecipeItem.jsx';
 import { getRecipes } from '../reducers/searchResults';
 import * as actions from '../actions';
 import LinearProgress from 'material-ui/LinearProgress';

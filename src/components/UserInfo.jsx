@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Avatar from 'material-ui/Avatar';
 import * as consts from '../constants';
-import CountrySelector from '../components/CountrySelector.jsx';
+import CountrySelector from './CountrySelector.jsx';
 
 const UserInfo = ({ user }) => (
   <div className="user-info">

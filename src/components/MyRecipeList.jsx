@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import { List, ListItem } from 'material-ui/List';
 
-import RecipeItem from '../components/RecipeItem.jsx';
-import RecipeForm from '../components/RecipeForm.jsx';
+import RecipeItem from './RecipeItem.jsx';
+import RecipeForm from './RecipeForm.jsx';
 import { getMyRecipes } from '../reducers/recipes';
 import * as actions from '../actions';
 import LinearProgress from 'material-ui/LinearProgress';
