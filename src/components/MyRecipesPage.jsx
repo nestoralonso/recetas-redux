@@ -1,5 +1,5 @@
 import React from 'react';
-import MyRecipeList from '../containers/MyRecipeList.jsx';
+import MyRecipeList from './MyRecipeList.jsx';
 import NewRecipeButton from './NewRecipeButton.jsx';
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
-import UserInfo from '../containers/UserInfo.jsx';
+import UserInfo from './UserInfo.jsx';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
