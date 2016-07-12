@@ -26,10 +26,10 @@ class IngredientForm extends Component {
     super(props);
     this.state = Object.assign({}, BLANK_INGREDIENT);
     [this.handleClose,
-    this.handleSave,
-    this.nameChange,
-    this.locChange,
-    this.getLocValue,
+      this.handleSave,
+      this.nameChange,
+      this.locChange,
+      this.getLocValue,
     ].forEach(f => {
       this[f.name] = f.bind(this);
     });
