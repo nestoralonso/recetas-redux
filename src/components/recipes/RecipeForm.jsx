@@ -5,11 +5,11 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import MiniIngredientSearch from './MiniIngredientSearch.jsx';
-import IngredientQuantity from './IngredientQuantity.jsx';
-import { addRecipe, updateRecipe } from '../actions';
-import { UNITS } from '../constants';
-import * as gu from '../utils';
-import * as api from '../api';
+import IngredientQuantity from '../ingredients/IngredientQuantity.jsx';
+import { addRecipe, updateRecipe } from '../../actions';
+import { UNITS } from '../../constants';
+import * as gu from '../../utils';
+import * as api from '../../api';
 
 
 const BLANK_RECIPE = {

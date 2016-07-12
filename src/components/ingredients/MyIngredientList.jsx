@@ -6,7 +6,7 @@ import { List, ListItem } from 'material-ui/List';
 
 import IngredientItem from './IngredientItem.jsx';
 import IngredientForm from './IngredientForm.jsx';
-import * as actions from '../actions';
+import * as actions from '../../actions';
 
 
 class MyIngredientList extends Component {

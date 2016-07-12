@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-import * as constants from '../constants';
+import * as constants from '../../constants';
 import IconButton from 'material-ui/IconButton';
 import shallowCompare from 'react-addons-shallow-compare';
 

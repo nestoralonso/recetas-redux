@@ -6,8 +6,8 @@ import { List, ListItem } from 'material-ui/List';
 
 import RecipeItem from './RecipeItem.jsx';
 import RecipeForm from './RecipeForm.jsx';
-import { getMyRecipes } from '../reducers/recipes';
-import * as actions from '../actions';
+import { getMyRecipes } from '../../reducers/recipes';
+import * as actions from '../../actions';
 import LinearProgress from 'material-ui/LinearProgress';
 
 

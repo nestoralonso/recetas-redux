@@ -6,14 +6,14 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import AppShell from './components/AppShell.jsx';
-import RecipesPage from './components/MyRecipesPage.jsx';
-import IngredientsPage from './components/MyIngredientsPage.jsx';
-import Login from './containers/Login.jsx';
+import RecipesPage from './components/recipes/MyRecipesPage.jsx';
+import IngredientsPage from './components/ingredients/MyIngredientsPage.jsx';
+import Login from './components/Login.jsx';
 import About from './components/About.jsx';
 import configureStore from './store/configureStore';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import RecipesHub from './containers/RecipesHub.jsx';
-import RecipeDetail from './containers/RecipeDetail.jsx';
+import RecipesHub from './components/recipes/RecipesHub.jsx';
+import RecipeDetail from './components/recipes/RecipeDetail.jsx';
 import * as api from './api/fb-recipes-api.js';
 
 // when using webpack

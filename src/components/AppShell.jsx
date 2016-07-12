@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 
 import MyAppBar from './MyAppBar.jsx';
 import Toolbar from './Toolbar.jsx';
-import RecipeForm from './RecipeForm.jsx';
+import RecipeForm from './recipes/RecipeForm.jsx';
 
 
 class AppShell extends Component {

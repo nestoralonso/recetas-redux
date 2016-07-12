@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import * as gu from '../utils';
-import * as consts from '../constants';
-import { fetchRecipeWithDetails } from '../api';
+import * as gu from '../../utils';
+import * as consts from '../../constants';
+import { fetchRecipeWithDetails } from '../../api';
 
 
 class RecipeDetail extends Component {

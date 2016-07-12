@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Popover from 'material-ui/Popover';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 import IconButton from 'material-ui/IconButton';
-import { searchIngredients } from '../api';
+import { searchIngredients } from '../../api';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 
 const styles = {
