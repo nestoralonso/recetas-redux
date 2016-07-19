@@ -40,7 +40,7 @@ class IngredientForm extends Component {
       const newState = Object.assign({}, BLANK_INGREDIENT);
       this.setState(newState);
     } else if (nextProps.ingredient) {
-      const newState = Object.assign({}, nextProps.ingredient);
+      const newState = Object.assign({}, nextProps.ingredient, { id: nextProps.ingredientId });
       this.setState(newState);
     }
   }
@@ -160,6 +160,7 @@ class IngredientForm extends Component {
 IngredientForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userId: PropTypes.string,
+  ingredientId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   newIngredient: PropTypes.bool,
   open: PropTypes.bool.isRequired,

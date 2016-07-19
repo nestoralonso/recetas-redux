@@ -24,8 +24,8 @@ class MyIngredientList extends Component {
     }
   }
 
-  onIngredientSelected(e, ingredientEdit) {
-    this.setState({ ingredientEdit, openEdit: true });
+  onIngredientSelected(e, ingredientEdit, key) {
+    this.setState({ ingredientEdit, openEdit: true, ingredientId: key });
   }
 
   fetchData() {
@@ -47,7 +47,7 @@ class MyIngredientList extends Component {
           {Object.keys(ingredients).map(key =>
             <ListItem
               key={key}
-              onTouchTap={(e) => this.onIngredientSelected(e, ingredients[key])}
+              onTouchTap={(e) => this.onIngredientSelected(e, ingredients[key], key)}
             >
               <IngredientItem ingredient={ingredients[key]} />
             </ListItem>)}
@@ -56,6 +56,7 @@ class MyIngredientList extends Component {
         <IngredientForm
           open={this.state.openEdit}
           ingredient={this.state.ingredientEdit}
+          ingredientId={this.state.ingredientId}
           onClose={this.handleClose}
         />
       </div>
