@@ -6,7 +6,7 @@
     "build:dev": "browserify src/main.js -d --extension=.jsx -t [ babelify --sourceMapsAbsolute --presets [ react es2015 ] ] -o dist/bundle.js",
     "build:prod": "npm run build:browserify && npm run uglify:dist",
     "build:browserify": "browserify src/main.js --extension=.jsx -t [ babelify --presets [ react es2015 ] ] -o dist/bundle.exp.js",
-    "uglify:dist": "uglifyjs -mc dist/bundle.exp.js > dist/bundle.js",
+    "uglify:dist": "uglifyjs dist/bundle.exp.js -mc  > dist/bundle.js",
     "build:wprod": "webpack -p --config webpack.config.prod.js",
     "start": "npm run build:dev && npm-run-all --parallel watch browser",
     "startwp": "node devServer.js",
@@ -45,7 +45,7 @@
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^3.0.0-beta.1",
     "style-loader": "^0.13.1",
-    "uglify": "^0.1.5",
+    "uglify-js": "^2.7.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1",
     "webpack-validator": "^2.2.3"
