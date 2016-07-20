@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import { List, ListItem } from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
 
 import RecipeItem from './RecipeItem.jsx';
 import RecipeForm from './RecipeForm.jsx';
@@ -10,13 +11,38 @@ import { getMyRecipes } from '../../reducers/recipes';
 import * as actions from '../../actions';
 import LinearProgress from 'material-ui/LinearProgress';
 
+  // onTouchTap={(e) => { this.onRecipeSelected(e, recipe); console.log('touchtap'); }}
 
+const RightButtons = ({ recipe, onEdit, onDelete }) => (
+  <div>
+    <IconButton
+      iconClassName="material-icons"
+      tooltip="lol1"
+      onClick={(e) => {
+        onEdit(e, recipe);
+      }}
+    >
+      edit
+    </IconButton>
+    <IconButton
+      iconClassName="material-icons"
+      tooltip="lol2"
+      onClick={(e) => {
+        onDelete(e, recipe);
+      }}
+    >
+      clear
+    </IconButton>
+  </div>
+);
 class MyRecipeList extends Component {
   constructor(props) {
     super(props);
     this.fetchData();
     this.state = { recipeEdit: null, openEdit: false };
     this.handleClose = this.handleClose.bind(this);
+    this.onRecipeSelected = this.onRecipeSelected.bind(this);
+    this.onRecipeDelete = this.onRecipeDelete.bind(this);
   }
 
   componentWillMount() {
@@ -27,6 +53,11 @@ class MyRecipeList extends Component {
 
   onRecipeSelected(e, recipeEdit) {
     this.setState({ recipeEdit, openEdit: true });
+  }
+
+  onRecipeDelete(e, recipe) {
+    console.log('Deleting recipe=', recipe.title);
+    this.props.removeRecipe(recipe, this.props.userId);
   }
 
   handleClose() {
@@ -40,6 +71,7 @@ class MyRecipeList extends Component {
     fetchRecipes(userId);
   }
 
+
   render() {
     const { recipes, isFetching } = this.props;
     return (
@@ -51,7 +83,12 @@ class MyRecipeList extends Component {
             {recipes.map(recipe =>
               <ListItem
                 key={recipe.id}
-                onTouchTap={(e) => this.onRecipeSelected(e, recipe)}
+                rightIcon={<RightButtons
+                  recipe={recipe}
+                  onEdit={this.onRecipeSelected}
+                  onDelete={this.onRecipeDelete}
+                />}
+
               >
                 <RecipeItem recipe={recipe} />
               </ListItem>)}
@@ -81,7 +118,10 @@ const mapStateToProps = (state) => ({
   userId: state.user.userId,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchRecipes: (userId) => dispatch(actions.fetchRecipes(userId)),
+  removeRecipe: (recipe, userId) => dispatch(actions.removeRecipe(recipe, userId)),
+});
+
 export default connect(
-  mapStateToProps, {
-    fetchRecipes: actions.fetchRecipes,
-  })(MyRecipeList);
+  mapStateToProps, mapDispatchToProps)(MyRecipeList);

@@ -8,6 +8,10 @@ function byId(state = {}, action) {
         {},
         state,
         { [action.id]: action.response });
+    case 'REMOVE_RECIPE_SUCCESS':
+      const newState = Object.assign({}, state);
+      delete newState[action.id];
+      return newState;
     case 'FETCH_RECIPES_SUCCESS':
       return action.response;
     default:
@@ -19,6 +23,8 @@ function allIds(state = [], action) {
   switch (action.type) {
     case 'ADD_RECIPE_SUCCESS':
       return [...state, action.id];
+    case 'REMOVE_RECIPE_SUCCESS':
+      return state.filter(id => id !== action.id);
     case 'FETCH_RECIPES_SUCCESS':
       return Object.keys(action.response);
     default:

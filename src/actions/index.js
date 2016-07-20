@@ -122,6 +122,13 @@ export const addRecipe = (recipe, userId) => (dispatch) =>
     response,
   }));
 
+export const removeRecipe = (recipe, userId) => (dispatch) =>
+  api.removeRecipe(recipe, userId).then(response => dispatch({
+    type: 'REMOVE_RECIPE_SUCCESS',
+    id: response.id,
+    response,
+  }));
+
 export const updateRecipe = (recipe) => (dispatch) =>
   api.updateRecipe(recipe).then(response => dispatch({
     type: 'UPDATE_RECIPE_SUCCESS',

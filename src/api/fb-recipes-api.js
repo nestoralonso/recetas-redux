@@ -61,6 +61,21 @@ export function addRecipe(recipeForm, userId) {
   return Promise.resolve(newRecipe);
 }
 
+export function removeRecipe(recipe, userId) {
+  const recipeId = recipe.id;
+  const updates = {};
+
+  // setting the data to null equals removing the data
+  updates[`/recipes/${recipeId}`] = null;
+  updates[`/user-recipes/${userId}/${recipeId}`] = null;
+
+  const res = firebaseDB.ref().update(updates);
+  res
+    .then(_ => console.log('del rp success'))
+    .catch(err => Promise.reject(err));
+  return Promise.resolve(recipe);
+}
+
 export function updateRecipe(recipeForm) {
   const recipeId = recipeForm.id;
   const newRecipe = utils.convertRecipeToFB(recipeForm);
