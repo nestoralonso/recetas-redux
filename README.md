@@ -79,15 +79,14 @@ Redux creates a new state like this: oldState + action = newState
 - [x] Add some responsive styling
 - [x] Test Firebase hosting
 - [x] Implement redirect for login
+- [x] Edit form for recipes
 - [ ] Normalize ingredients name when saving, ie, remove tildes and lowercase
 - [ ] Make a production bundle
 - [ ] Make the recipes hub use the REST api 
-- [ ] Fix the ingredient search UI a little, by making more clear why is showing those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
+- [ ] Usability: Fix the ingredient search UI a little, by making more clear why is showing those search results, ex: searching for 'b': also finds 'tocineta' because one of its locs is 'beicon' 
 - [ ] Complete ingredient CRUD
 - [ ] Complete recipe CRUD
 - [ ] Implement logout
-- [ ] Search recipes by ingredient
-- [ ] Edit form for recipes
 - [ ] Checkout material-ui with sass
 
 ## DREAM TODOS
