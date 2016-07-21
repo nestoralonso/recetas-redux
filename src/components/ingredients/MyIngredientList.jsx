@@ -64,7 +64,7 @@ class MyIngredientList extends Component {
   }
 }
 MyIngredientList.propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.object,
   fetchIngredients: PropTypes.func.isRequired,
   userId: PropTypes.string,
 };
