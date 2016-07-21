@@ -26,7 +26,7 @@ function allIds(state = [], action) {
     case 'REMOVE_RECIPE_SUCCESS':
       return state.filter(id => id !== action.id);
     case 'FETCH_RECIPES_SUCCESS':
-      return Object.keys(action.response);
+      return action.response ? Object.keys(action.response) : state;
     default:
       return state;
   }
