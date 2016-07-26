@@ -3,11 +3,39 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import { List, ListItem } from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
 
 import IngredientItem from './IngredientItem.jsx';
 import IngredientForm from './IngredientForm.jsx';
 import * as actions from '../../actions';
 
+const RightButtons = ({ ingredientId, onEdit, onDelete }) => (
+  <div>
+    <IconButton
+      iconClassName="material-icons"
+      tooltip="Edit"
+      onClick={(e) => {
+        onEdit(e, ingredientId);
+      }}
+    >
+      edit
+    </IconButton>
+    <IconButton
+      iconClassName="material-icons"
+      tooltip="Delete"
+      onClick={(e) => {
+        onDelete(e, ingredientId);
+      }}
+    >
+      clear
+    </IconButton>
+  </div>
+);
+RightButtons.propTypes = {
+  ingredientId: PropTypes.string.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 class MyIngredientList extends Component {
   constructor(props) {
@@ -15,6 +43,7 @@ class MyIngredientList extends Component {
     this.state = { ingredientEdit: null, openEdit: false };
     this.fetchData();
     this.onIngredientSelected = this.onIngredientSelected.bind(this);
+    this.onIngredientDelete = this.onIngredientDelete.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
@@ -24,8 +53,15 @@ class MyIngredientList extends Component {
     }
   }
 
-  onIngredientSelected(e, ingredientEdit, key) {
+  onIngredientSelected(e, key) {
+    const ingredientEdit = this.props.ingredients[key];
     this.setState({ ingredientEdit, openEdit: true, ingredientId: key });
+  }
+
+  onIngredientDelete(e, ingredientId) {
+    const ingredientData = this.props.ingredients[ingredientId];
+    this.props.removeIngredient(ingredientData, ingredientId, this.props.userId);
+    console.log('del ingredient=', ingredientId);
   }
 
   fetchData() {
@@ -47,7 +83,11 @@ class MyIngredientList extends Component {
           {Object.keys(ingredients).map(key =>
             <ListItem
               key={key}
-              onTouchTap={(e) => this.onIngredientSelected(e, ingredients[key], key)}
+              rightIcon={<RightButtons
+                ingredientId={key}
+                onEdit={this.onIngredientSelected}
+                onDelete={this.onIngredientDelete}
+              />}
             >
               <IngredientItem ingredient={ingredients[key]} />
             </ListItem>)}
@@ -79,4 +119,5 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps, {
     fetchIngredients: actions.fetchIngredients,
+    removeIngredient: actions.removeIngredient,
   })(MyIngredientList);

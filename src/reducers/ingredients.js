@@ -13,6 +13,7 @@ import { combineReducers } from 'redux';
  */
 
 export const byId = (state = {}, action) => {
+  let newState = {};
   switch (action.type) {
     case 'FETCH_INGREDIENTS_SUCCESS':
       return action.response;
@@ -22,6 +23,10 @@ export const byId = (state = {}, action) => {
         {},
         state,
         { [action.id]: action.response });
+    case 'REMOVE_INGREDIENT_SUCCESS':
+      newState = Object.assign({}, state);
+      delete newState[action.id];
+      return newState;
     default:
       return state;
   }

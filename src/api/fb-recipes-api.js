@@ -205,6 +205,7 @@ function cleanForm(ingredientForm) {
     }
   }
 }
+
 export function addIngredient(ingredientForm, userId) {
   const newKey = firebaseDB.ref().child('ingredients').push().key;
 
@@ -227,6 +228,27 @@ export function addIngredient(ingredientForm, userId) {
   const result = firebaseDB.ref().update(updates);
   ingredientForm.id = newKey;
   return result.then(_ => ingredientForm);
+}
+
+export function removeIngredient(ingredientData, ingredientId, userId) {
+  const ingKey = ingredientId;
+
+  const updates = {};
+  updates[`/ingredients/${ingKey}`] = null;
+  updates[`/user-ingredients/${userId}/${ingKey}`] = null;
+
+  for (const loc of Object.keys(ingredientData.localizations)) {
+    const word = normalizeWord(ingredientData.localizations[loc]);
+    if (!word) { continue; }
+    updates[`/ing-by-word/${word}/${ingKey}`] = null;
+  }
+
+  // Also add the original name to the mix
+  const genericName = normalizeWord(ingredientData.name);
+  updates[`/ing-by-word/${genericName}/${ingKey}`] = null;
+
+  const result = firebaseDB.ref().update(updates);
+  return result.then(_ => ingredientData);
 }
 
 export function updateIngredient(ingredientForm) {

@@ -151,15 +151,16 @@ export const addIngredient = (ingredientForm, uid) => (dispatch) => {
   }));
 };
 
+export const removeIngredient = (ingredientData, ingredientId, userId) => (dispatch) => {
+  return api.removeIngredient(ingredientData, ingredientId, userId).then(response => dispatch({
+    type: 'REMOVE_INGREDIENT_SUCCESS',
+    id: ingredientId,
+    response,
+  }));
+};
 
 export const loginProcess = () => (dispatch) =>
   api.loginPromise();
-
-/*
-export const loginRedirectResult = () => (dispatch) => {
-
-};
-*/
 
 export const loginProcessPopup = () => (dispatch) => {
   return api.loginPromise().then(
