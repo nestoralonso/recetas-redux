@@ -35,6 +35,11 @@ const RightButtons = ({ recipe, onEdit, onDelete }) => (
     </IconButton>
   </div>
 );
+RightButtons.propTypes = {
+  recipe: PropTypes.object.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 class MyRecipeList extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +61,6 @@ class MyRecipeList extends Component {
   }
 
   onRecipeDelete(e, recipe) {
-    console.log('Deleting recipe=', recipe.title);
     this.props.removeRecipe(recipe, this.props.userId);
   }
 
@@ -108,6 +112,7 @@ MyRecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
   userId: PropTypes.string,
   fetchRecipes: PropTypes.func.isRequired,
+  removeRecipe: PropTypes.func.isRequired,
   isFetching: PropTypes.bool,
 };
 
